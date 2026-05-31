@@ -1,13 +1,4 @@
-/* ============================================================
-   MANN JANODIA — PORTFOLIO STYLES
-   style.css
-
-   HOW TO EDIT:
-   - Colors → change values in :root {}
-   - Fonts  → change font-family in body / body.hi
-   - Layout → edit section, .story-g, .proj-grid etc.
-   ============================================================ */
-
+/* ── Made by Mann janodia -- CSS ── */
 /* ── ROOT VARIABLES ── */
 :root {
   --primary:   #00d9ff;
