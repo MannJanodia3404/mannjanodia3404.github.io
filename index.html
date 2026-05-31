@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mann Janodia — Robotics Engineer</title>
+<title>Mann Janodia: Robotics Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -25,101 +25,493 @@
 @keyframes scanRing{0%,100%{opacity:.5}50%{opacity:.1}}
 
 /* ── Nudge showcase box further right ── */
-.showcase{
-  margin-left:auto !important;
-  margin-right:2rem !important;
+.showcase{margin-left:auto !important;margin-right:2rem !important;}
+
+/* ── Hero: reduce top padding ── */
+.hero{padding-top:5rem !important;padding-bottom:2rem !important;min-height:100vh !important;align-items:center !important;}
+.hero-tag{margin-bottom:.9rem !important;}
+.hero h1{margin-bottom:.8rem !important;}
+.hero-sub{margin-bottom:.7rem !important;}
+.hero-desc{margin-bottom:1.4rem !important;line-height:1.75 !important;}
+
+/* ── MODAL: no scrollbar ── */
+.modal{max-height:none !important;overflow:visible !important;overflow-y:visible !important;}
+.overlay{overflow-y:auto !important;align-items:flex-start !important;padding:3vh 1.5rem !important;}
+.modal-body{padding:1.1rem 1.5rem 1.3rem !important;}
+.modal-body h4{font-size:.84rem !important;margin:.6rem 0 .3rem !important;}
+.modal-body h4:first-child{margin-top:0 !important;}
+.modal-body p,.modal-body li{font-size:.82rem !important;line-height:1.58 !important;margin-bottom:.2rem !important;}
+.modal-body ul{margin-left:.95rem !important;}
+.stats-row{padding:.55rem !important;margin:.55rem 0 !important;gap:.45rem !important;}
+.sv{font-size:.92rem !important;}
+.modal-links{margin-top:.6rem !important;}
+
+/* ── Project card tags ── */
+.tags{display:flex !important;flex-wrap:wrap !important;gap:.28rem !important;margin-bottom:.5rem !important;overflow:visible !important;}
+.tag{padding:.18rem .65rem !important;background:rgba(0,217,255,.1) !important;color:#00d9ff !important;border-radius:10px !important;font-size:.68rem !important;font-family:'IBM Plex Mono',monospace !important;white-space:nowrap !important;border:none !important;}
+.modal-chips{display:flex !important;flex-wrap:wrap !important;gap:.4rem !important;margin:.35rem 0 !important;overflow:visible !important;}
+.modal-chip{padding:.25rem .75rem !important;background:rgba(0,217,255,.08) !important;border:1px solid rgba(0,217,255,.22) !important;color:#e8edf4 !important;border-radius:20px !important;font-size:.78rem !important;white-space:nowrap !important;}
+.modal::-webkit-scrollbar,.modal-chips::-webkit-scrollbar,.tags::-webkit-scrollbar{display:none !important;}
+.modal,.modal-chips,.tags{scrollbar-width:none !important;}
+
+/* ═══════════════════════════════════════════════════
+   NEW ADDITIONS
+═══════════════════════════════════════════════════ */
+
+/* ── SKILL LOGOS in sk-row ── */
+.chips{display:none!important;}
+.sk-logos{
+  display:flex;flex-wrap:wrap;gap:.5rem;
+  margin-top:.55rem;
+}
+.sk-logo-item{
+  display:flex;align-items:center;gap:.38rem;
+  background:rgba(0,217,255,.06);
+  border:1px solid rgba(0,217,255,.18);
+  border-radius:999px;
+  padding:.28rem .75rem .28rem .45rem;
+  transition:background .18s,border-color .18s;
+}
+.sk-logo-item:hover{background:rgba(0,217,255,.14);border-color:rgba(0,217,255,.4);}
+.sk-logo-item img{width:18px;height:18px;object-fit:contain;display:block;flex-shrink:0;}
+.sk-logo-item .sk-fb{
+  width:18px;height:18px;border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:7px;font-weight:700;font-family:'IBM Plex Mono',monospace;
+  flex-shrink:0;
+}
+.sk-logo-item span{font-size:.7rem;color:#8892a6;font-family:'IBM Plex Mono',monospace;white-space:nowrap;}
+
+/* ── PROJECT IMAGES in pc-head ── */
+.pc-img{
+  width:100%;height:170px;overflow:hidden;
+  position:relative;border-radius:6px 6px 0 0;
+  background:#0d1117;
+}
+.pc-img img,.pc-img video{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+.pc-img-fallback{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  font-size:2.5rem;color:rgba(0,217,255,.18);
+}
+/* slideshow dots */
+.pc-img-dots{
+  position:absolute;bottom:7px;left:50%;transform:translateX(-50%);
+  display:flex;gap:5px;z-index:2;
+}
+.pc-img-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(255,255,255,.28);cursor:pointer;transition:background .2s;border:none;padding:0;
+}
+.pc-img-dot.on{background:#00d9ff;}
+/* nav arrows */
+.pc-img-prev,.pc-img-next{
+  position:absolute;top:50%;transform:translateY(-50%);
+  background:rgba(0,0,0,.45);border:none;color:#fff;
+  width:26px;height:26px;border-radius:50%;cursor:pointer;
+  font-size:14px;display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .2s;z-index:3;
+}
+.pc-img:hover .pc-img-prev,.pc-img:hover .pc-img-next{opacity:1;}
+.pc-img-prev{left:7px;}
+.pc-img-next{right:7px;}
+.pc-img .active{display:block;}
+.pc-img img:not(.active),.pc-img video:not(.active){display:none;}
+
+/* ── CAD SECTION ── */
+#cad{padding:5rem 2rem 4rem;}
+.cad-shell{
+  background:rgba(13,17,27,.9);
+  border:1px solid rgba(0,217,255,.18);
+  border-radius:12px;overflow:hidden;
+  max-width:900px;margin:0 auto;
+}
+.cad-topbar{
+  padding:.9rem 1.2rem;
+  border-bottom:1px solid rgba(0,217,255,.12);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.6rem;
+}
+.cad-model-name{font-size:.85rem;color:#00d9ff;font-family:'IBM Plex Mono',monospace;letter-spacing:.04em;}
+.cad-model-desc{font-size:.72rem;color:#8892a6;margin-top:.2rem;}
+.cad-ctrl-row{display:flex;gap:.5rem;flex-wrap:wrap;}
+.cad-ctrl-btn{
+  padding:.32rem .85rem;background:rgba(0,217,255,.07);
+  border:1px solid rgba(0,217,255,.22);border-radius:6px;
+  font-size:.72rem;color:#00d9ff;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;transition:background .18s;text-decoration:none;
+}
+.cad-ctrl-btn:hover,.cad-ctrl-btn.active{background:rgba(0,217,255,.18);}
+#cad-canvas{width:100%;height:440px;display:block;background:#030810;cursor:grab;}
+#cad-canvas:active{cursor:grabbing;}
+.cad-hint{
+  text-align:center;padding:.45rem;font-size:.7rem;
+  color:#8892a6;font-family:'IBM Plex Mono',monospace;
+  background:rgba(0,0,0,.3);border-top:1px solid rgba(0,217,255,.1);
+}
+.cad-model-tabs{
+  padding:.8rem 1.2rem;border-top:1px solid rgba(0,217,255,.1);
+  display:flex;gap:.5rem;flex-wrap:wrap;
+}
+.cad-tab{
+  padding:.32rem 1rem;border-radius:999px;font-size:.72rem;cursor:pointer;
+  border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);
+  color:#8892a6;transition:all .18s;font-family:'IBM Plex Mono',monospace;
+}
+.cad-tab.active{background:rgba(0,217,255,.1);border-color:rgba(0,217,255,.35);color:#00d9ff;}
+
+/* ── RESUME MODAL overlay ── */
+#resume-overlay{
+  position:fixed;inset:0;background:rgba(5,8,18,.92);
+  z-index:9000;display:none;align-items:center;justify-content:center;
+  padding:1.5rem;
+}
+#resume-overlay.open{display:flex;}
+.resume-modal-box{
+  width:100%;max-width:860px;
+  background:#0a0e1b;border:1px solid rgba(0,217,255,.25);
+  border-radius:12px;overflow:hidden;display:flex;flex-direction:column;
+  max-height:92vh;
+}
+.resume-modal-top{
+  padding:.75rem 1.1rem;border-bottom:1px solid rgba(0,217,255,.15);
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+}
+.resume-modal-title{font-size:.82rem;color:#00d9ff;font-family:'IBM Plex Mono',monospace;}
+.resume-modal-actions{display:flex;gap:.5rem;align-items:center;}
+.resume-modal-actions a{
+  padding:.3rem .85rem;background:rgba(0,217,255,.08);
+  border:1px solid rgba(0,217,255,.25);border-radius:6px;
+  font-size:.72rem;color:#00d9ff;text-decoration:none;
+  font-family:'IBM Plex Mono',monospace;transition:background .18s;
+}
+.resume-modal-actions a:hover{background:rgba(0,217,255,.2);}
+.resume-close-btn{
+  background:none;border:none;color:#8892a6;font-size:1.2rem;
+  cursor:pointer;padding:.2rem .4rem;line-height:1;
+}
+.resume-close-btn:hover{color:#fff;}
+#resume-frame{width:100%;flex:1;border:none;min-height:0;}
+.resume-fallback-msg{
+  display:none;padding:2.5rem;text-align:center;color:#8892a6;font-size:.85rem;
 }
 
-/* ── Hero: reduce top padding so MSc tag is never cut off ── */
-.hero{
-  padding-top:5rem !important;
-  padding-bottom:2rem !important;
-  min-height:100vh !important;
-  align-items:center !important;
-}
-.hero-tag{ margin-bottom:.9rem !important; }
-.hero h1 { margin-bottom:.8rem !important; }
-.hero-sub { margin-bottom:.7rem !important; }
-.hero-desc{ margin-bottom:1.4rem !important; line-height:1.75 !important; }
+/* ── bigger modals ── */
+.modal{width:min(96vw,1100px)!important;max-height:none!important;overflow:visible!important;}
+.overlay{padding:2vh 1rem!important;align-items:flex-start!important;overflow-y:auto!important;}
+.modal-body p,.modal-body li{font-size:.85rem!important;line-height:1.7!important;text-align:justify;}
+.modal-body h4{font-size:.88rem!important;}
+.modal-head h2{font-size:1.2rem!important;}
+/* 2-col for project modals */
+.m2c{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.m2c .modal-body{overflow-y:auto;max-height:72vh;}
+.mmp{display:flex;flex-direction:column;max-height:72vh;border-left:1px solid rgba(0,217,255,.1);background:rgba(0,0,0,.18);}
+.mmp-hd{font-size:.6rem;color:rgba(0,217,255,.45);letter-spacing:.15em;text-transform:uppercase;font-family:'IBM Plex Mono',monospace;padding:.65rem 1rem .2rem;}
+.mmp-track{flex:1;overflow:hidden;position:relative;touch-action:pan-y;min-height:180px;}
+.mmp-inner{display:flex;height:100%;transition:transform .3s cubic-bezier(.4,0,.2,1);}
+.mmp-slide{flex-shrink:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:.65rem;}
+.mmp-slide img{max-width:100%;max-height:calc(100% - 1.6rem);object-fit:contain;border-radius:6px;border:1px solid rgba(0,217,255,.14);}
+.mmp-slide video{max-width:100%;max-height:calc(100% - 1.6rem);border-radius:6px;border:1px solid rgba(0,217,255,.14);}
+.mmp-cap{font-size:.59rem;color:#8892a6;margin-top:.22rem;text-align:center;font-family:'IBM Plex Mono',monospace;}
+.mmp-nav{display:flex;justify-content:center;gap:.38rem;padding:.35rem;flex-shrink:0;}
+.mmp-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);border:none;cursor:pointer;padding:0;transition:background .18s;}
+.mmp-dot.on{background:#00d9ff;}
+.mmp-arr{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.5);border:1px solid rgba(0,217,255,.2);color:#00d9ff;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:13px;z-index:2;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .18s;}
+.mmp-track:hover .mmp-arr{opacity:1;}
+.mmp-al{left:6px;}.mmp-ar{right:6px;}
+/* skill modal logo chips */
+.mlc{display:flex;flex-wrap:wrap;gap:.45rem;margin:.4rem 0 .6rem;}
+.mlci{display:flex;align-items:center;gap:.4rem;background:rgba(0,217,255,.05);border:1px solid rgba(0,217,255,.15);border-radius:8px;padding:.3rem .6rem;font-size:.72rem;color:#cceeff;}
+.mlci img{width:17px;height:17px;object-fit:contain;}
+.mlcfb{width:17px;height:17px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:7.5px;font-weight:700;font-family:'IBM Plex Mono',monospace;}
+/* bigger resume */
+.resume-modal-box{width:min(99vw,1200px)!important;height:99vh!important;max-height:99vh!important;}
+#resume-frame{height:90vh!important;min-height:0!important;}
+/* CAD canvas no page scroll */
+#cad-canvas{touch-action:none;}
+@media(max-width:680px){.m2c{grid-template-columns:1fr;}.mmp{max-height:38vh;border-left:none;border-top:1px solid rgba(0,217,255,.1);}.m2c .modal-body{max-height:45vh;}}
 
-/* ── MODAL: no scrollbar, fits all content ── */
-.modal{
-  max-height:none !important;   /* remove the 88vh cap that was causing scroll */
-  overflow:visible !important;
-  overflow-y:visible !important;
+/* ══════════════════════════════════════════════════
+   JARVIS HUD , STARK INDUSTRIES STYLE
+══════════════════════════════════════════════════ */
+#jv-btn{
+  position:fixed;bottom:24px;right:24px;z-index:9999;
+  cursor:pointer;display:flex!important;
+  flex-direction:column;align-items:center;gap:4px;
 }
-/* Let the overlay itself scroll on very small screens if needed */
-.overlay{
-  overflow-y:auto !important;
-  align-items:flex-start !important;
-  padding:3vh 1.5rem !important;
-}
-/* Compact modal body so everything fits neatly */
-.modal-body{
-  padding:1.1rem 1.5rem 1.3rem !important;
-}
-.modal-body h4{
-  font-size:.84rem !important;
-  margin:.6rem 0 .3rem !important;
-}
-.modal-body h4:first-child{ margin-top:0 !important; }
-.modal-body p,
-.modal-body li{
-  font-size:.82rem !important;
-  line-height:1.58 !important;
-  margin-bottom:.2rem !important;
-}
-.modal-body ul{ margin-left:.95rem !important; }
-.stats-row{
-  padding:.55rem !important;
-  margin:.55rem 0 !important;
-  gap:.45rem !important;
-}
-.sv{ font-size:.92rem !important; }
-.modal-links{ margin-top:.6rem !important; }
-
-/* ── Project card tags — themed pills, wrap not scroll ── */
-.tags{
-  display:flex !important;
-  flex-wrap:wrap !important;
-  gap:.28rem !important;
-  margin-bottom:.5rem !important;
-  overflow:visible !important;
-}
-.tag{
-  padding:.18rem .65rem !important;
-  background:rgba(0,217,255,.1) !important;
-  color:#00d9ff !important;
-  border-radius:10px !important;
-  font-size:.68rem !important;
-  font-family:'IBM Plex Mono',monospace !important;
-  white-space:nowrap !important;
-  border:none !important;
+#jv-lbl{
+  font-size:7px;letter-spacing:3px;
+  color:rgba(0,217,255,.45);
+  font-family:'IBM Plex Mono',monospace;text-align:center;
 }
 
-/* ── Modal skill chips — themed pills, wrap not scroll ── */
-.modal-chips{
-  display:flex !important;
-  flex-wrap:wrap !important;
-  gap:.4rem !important;
-  margin:.35rem 0 !important;
-  overflow:visible !important;
+/* ── panel ── */
+#jv-panel{
+  position:fixed;bottom:112px;right:20px;
+  width:min(780px,94vw);
+  background:#020a12;
+  border:1px solid rgba(0,217,255,.3);
+  border-radius:6px;
+  display:none;flex-direction:column;
+  z-index:9998;overflow:hidden;
+  box-shadow:0 0 80px rgba(0,120,255,.18),
+             0 0 0 1px rgba(0,217,255,.07),
+             inset 0 0 60px rgba(0,30,80,.4);
 }
-.modal-chip{
-  padding:.25rem .75rem !important;
-  background:rgba(0,217,255,.08) !important;
-  border:1px solid rgba(0,217,255,.22) !important;
-  color:#e8edf4 !important;
-  border-radius:20px !important;
-  font-size:.78rem !important;
-  white-space:nowrap !important;
+#jv-panel.jvopen{display:flex;}
+/* scanlines */
+#jv-panel::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:repeating-linear-gradient(
+    0deg,transparent,transparent 2px,
+    rgba(0,217,255,.011) 2px,rgba(0,217,255,.011) 4px
+  );
 }
 
-/* nuke any scrollbar that sneaks in */
-.modal::-webkit-scrollbar,
-.modal-chips::-webkit-scrollbar,
-.tags::-webkit-scrollbar{ display:none !important; }
-.modal,.modal-chips,.tags{ scrollbar-width:none !important; }
+/* ── top chrome bar ── */
+.jvtop{
+  display:flex;align-items:stretch;
+  border-bottom:1px solid rgba(0,217,255,.18);
+  background:linear-gradient(180deg,rgba(0,30,80,.6) 0%,rgba(0,15,40,.4) 100%);
+  position:relative;z-index:1;flex-shrink:0;
+}
+/* animated scan line */
+.jvtop::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(0,217,255,.9),transparent);
+  animation:jvbar 4s linear infinite;
+}
+@keyframes jvbar{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
+/* title block */
+.jvtop-brand{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:.55rem 1.1rem;border-right:1px solid rgba(0,217,255,.15);
+  min-width:180px;
+}
+.jvtop-name{
+  font-size:.85rem;color:#fff;letter-spacing:.28em;font-weight:700;
+  font-family:'IBM Plex Mono',monospace;line-height:1;
+  text-shadow:0 0 12px rgba(0,217,255,.5);
+}
+.jvtop-sub{
+  font-size:.42rem;color:rgba(0,217,255,.4);letter-spacing:.08em;
+  font-family:'IBM Plex Mono',monospace;margin-top:.2rem;
+}
+
+/* stats strip in topbar */
+.jvtop-stats{display:flex;flex:1;}
+.jvtop-stat{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:.4rem .9rem;border-right:1px solid rgba(0,217,255,.1);
+  min-width:80px;
+}
+.jvtop-stat:last-child{border-right:none;}
+.jvts-v{
+  font-size:.95rem;font-weight:700;color:#00d9ff;
+  font-family:'IBM Plex Mono',monospace;line-height:1;letter-spacing:.02em;
+}
+.jvts-l{
+  font-size:.42rem;color:rgba(0,217,255,.35);
+  letter-spacing:.14em;margin-top:.12rem;text-transform:uppercase;
+  font-family:'IBM Plex Mono',monospace;
+}
+
+/* online + close */
+.jvtop-r{
+  display:flex;align-items:center;gap:.6rem;
+  padding:.4rem .8rem;margin-left:auto;flex-shrink:0;
+}
+.jvlive{display:flex;align-items:center;gap:.35rem;}
+.jvdot{
+  width:7px;height:7px;border-radius:50%;
+  background:#00ff88;box-shadow:0 0 7px #00ff88;
+  animation:jvpulse 2s ease-in-out infinite;
+}
+@keyframes jvpulse{0%,100%{opacity:1}50%{opacity:.2}}
+.jvdot-txt{font-size:.56rem;color:#00ff88;letter-spacing:.15em;font-family:'IBM Plex Mono',monospace;}
+.jvclock-top{font-size:.56rem;color:rgba(0,217,255,.5);letter-spacing:.12em;font-family:'IBM Plex Mono',monospace;}
+.jvx{background:none;border:none;color:rgba(255,255,255,.2);cursor:pointer;font-size:.9rem;padding:.2rem .3rem;transition:color .15s;}
+.jvx:hover{color:#ff3355;}
+
+/* ── main body: 2-col layout ── */
+.jv-body{display:flex;flex:1;min-height:0;position:relative;z-index:1;}
+
+/* left: messages + input */
+.jv-left{
+  display:flex;flex-direction:column;flex:1;min-width:0;
+  border-right:1px solid rgba(0,217,255,.1);
+}
+
+/* arc logo area */
+.jv-arc-row{
+  display:flex;align-items:center;gap:.7rem;
+  padding:.55rem 1rem .4rem;border-bottom:1px solid rgba(0,217,255,.08);
+  flex-shrink:0;
+}
+.jvarc{
+  width:38px;height:38px;border-radius:50%;
+  border:1.5px solid rgba(0,217,255,.35);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;flex-shrink:0;
+}
+.jvarc::before{content:'';position:absolute;inset:6px;border-radius:50%;border:1px solid rgba(0,217,255,.18);}
+.jvarc::after{
+  content:'';position:absolute;inset:-5px;border-radius:50%;
+  border:2px solid transparent;
+  border-top-color:rgba(0,217,255,.8);
+  border-left-color:rgba(0,217,255,.25);
+  animation:jvspin 2.5s linear infinite;
+}
+@keyframes jvspin{to{transform:rotate(360deg)}}
+.jvarc-c{
+  width:14px;height:14px;border-radius:50%;
+  background:radial-gradient(circle,#fff 0%,#6ff 25%,#08f 55%,transparent 100%);
+  box-shadow:0 0 16px rgba(0,217,255,.95),0 0 5px #fff;
+}
+.jv-arc-label{display:flex;flex-direction:column;}
+.jv-arc-title{font-size:.65rem;color:rgba(0,217,255,.55);letter-spacing:.18em;font-family:'IBM Plex Mono',monospace;}
+.jv-arc-sub{font-size:.42rem;color:rgba(0,217,255,.28);letter-spacing:.06em;font-family:'IBM Plex Mono',monospace;margin-top:.1rem;}
+
+/* output / terminal */
+.jvout{
+  flex:1;overflow-y:auto;
+  padding:.6rem 1rem;
+  display:flex;flex-direction:column;gap:.35rem;
+  min-height:120px;max-height:200px;
+}
+.jvout::-webkit-scrollbar{width:2px;}
+.jvout::-webkit-scrollbar-thumb{background:rgba(0,217,255,.2);}
+.jvline{
+  font-size:.72rem;line-height:1.55;
+  font-family:'IBM Plex Mono',monospace;
+  animation:jvfade .2s ease-out;
+}
+@keyframes jvfade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+.jvline.sys{color:rgba(0,217,255,.5);}
+.jvline.sys::before{content:'[ SYS ] ';color:rgba(0,217,255,.28);font-size:.62rem;}
+.jvline.ai{color:#c8e8ff;padding-left:.8rem;border-left:2px solid rgba(0,217,255,.35);}
+.jvline.usr{color:rgba(180,200,255,.45);text-align:right;}
+.jvline.usr::before{content:'[ INPUT ] ';color:rgba(0,217,255,.22);font-size:.6rem;}
+.jvtyp{
+  display:none;color:rgba(0,217,255,.38);
+  font-family:'IBM Plex Mono',monospace;font-size:.7rem;padding-left:.8rem;
+}
+.jvtyp::after{content:'_';animation:jvcur .8s step-end infinite;}
+@keyframes jvcur{0%,100%{opacity:1}50%{opacity:0}}
+
+/* chips */
+.jvchips{
+  padding:.3rem .85rem .35rem;
+  display:flex;flex-wrap:wrap;gap:.28rem;flex-shrink:0;
+}
+.jvchip{
+  background:rgba(0,217,255,.04);border:1px solid rgba(0,217,255,.18);
+  border-radius:4px;padding:.2rem .65rem;
+  font-size:.57rem;color:rgba(0,217,255,.6);
+  cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  transition:all .15s;letter-spacing:.04em;
+}
+.jvchip:hover{background:rgba(0,217,255,.12);border-color:rgba(0,217,255,.5);color:#00d9ff;}
+
+/* input row */
+.jvinp-row{
+  padding:.45rem .85rem;
+  border-top:1px solid rgba(0,217,255,.1);
+  display:flex;align-items:center;gap:.4rem;
+  background:rgba(0,0,0,.4);flex-shrink:0;
+}
+.jvpfx{font-size:.78rem;color:rgba(0,217,255,.38);font-family:'IBM Plex Mono',monospace;flex-shrink:0;}
+.jvinp{
+  flex:1;background:transparent;border:none;
+  color:#00d9ff;font-size:.73rem;
+  font-family:'IBM Plex Mono',monospace;
+  outline:none;caret-color:#00d9ff;
+}
+.jvinp::placeholder{color:rgba(0,217,255,.18);}
+.jvsend{
+  background:rgba(0,217,255,.07);border:1px solid rgba(0,217,255,.22);
+  border-radius:5px;padding:.3rem .75rem;height:28px;
+  color:#00d9ff;cursor:pointer;font-size:.62rem;font-family:'IBM Plex Mono',monospace;
+  letter-spacing:.08em;font-weight:600;
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  transition:background .15s;white-space:nowrap;
+}
+.jvsend:hover{background:rgba(0,217,255,.2);}
+
+/* ── right panel: shortcuts + vitals + log ── */
+.jv-right{
+  display:flex;flex-direction:column;
+  width:220px;flex-shrink:0;
+  background:rgba(0,8,22,.5);
+}
+.jv-rblock{
+  padding:.5rem .75rem;
+  border-bottom:1px solid rgba(0,217,255,.08);
+  flex-shrink:0;
+}
+.jv-rblock:last-child{border-bottom:none;flex:1;overflow:hidden;}
+.jv-rlabel{
+  font-size:.46rem;color:rgba(0,217,255,.32);
+  letter-spacing:.18em;text-transform:uppercase;
+  font-family:'IBM Plex Mono',monospace;margin-bottom:.38rem;
+}
+/* shortcut buttons */
+.jv-shortcuts{display:flex;flex-direction:column;gap:.22rem;}
+.jv-sc{
+  display:block;width:100%;text-align:left;
+  background:rgba(0,217,255,.03);
+  border:1px solid rgba(0,217,255,.14);
+  border-radius:5px;padding:.3rem .6rem;
+  font-size:.65rem;color:rgba(0,217,255,.65);
+  cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  transition:all .15s;letter-spacing:.04em;
+}
+.jv-sc:hover{background:rgba(0,217,255,.1);color:#00d9ff;border-color:rgba(0,217,255,.4);}
+/* vitals bars */
+.jv-vital{display:flex;flex-direction:column;gap:.14rem;margin-bottom:.32rem;}
+.jv-vital:last-child{margin-bottom:0;}
+.jv-vital-row{display:flex;justify-content:space-between;align-items:center;}
+.jv-vital-name{font-size:.5rem;color:rgba(0,217,255,.38);font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;}
+.jv-vital-val{font-size:.5rem;color:#00d9ff;font-family:'IBM Plex Mono',monospace;font-weight:700;}
+.jv-vital-val.none{color:#00ff88;}
+.jv-vbar{height:2px;border-radius:1px;background:rgba(0,217,255,.1);}
+.jv-vfill{height:100%;border-radius:1px;background:linear-gradient(90deg,#0050ff,#00d9ff);transition:width .8s ease;}
+/* system log */
+.jv-log{
+  overflow-y:auto;
+  max-height:80px;
+  display:flex;flex-direction:column;gap:.18rem;
+}
+.jv-log::-webkit-scrollbar{width:2px;}
+.jv-log::-webkit-scrollbar-thumb{background:rgba(0,217,255,.15);}
+.jv-log-line{
+  font-size:.52rem;font-family:'IBM Plex Mono',monospace;
+  color:rgba(0,217,255,.38);line-height:1.4;
+}
+.jv-log-line b{color:rgba(0,217,255,.65);}
+.jv-log-line.hi{color:#00ff88;}
+
+/* footer bar */
+.jvfoot{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.22rem 1rem;
+  border-top:1px solid rgba(0,217,255,.08);
+  background:rgba(0,0,0,.55);
+  position:relative;z-index:1;flex-shrink:0;
+}
+.jvfoot span{font-size:.46rem;color:rgba(0,217,255,.2);letter-spacing:.1em;font-family:'IBM Plex Mono',monospace;}
+
+/* ── Experience expand ── */
+.exp-row.exp-open .exp-body{max-height:500px!important;}
+.exp-row.exp-open .exp-arr{transform:rotate(90deg)!important;}
+.exp-row:hover{border-color:rgba(0,217,255,.28)!important;background:rgba(0,217,255,.02)!important;}
+
+/* ── JARVIS orb button visible ── */
+#jv-btn{display:flex!important;}
+
+/* ── Modal body text justified ── */
+.modal-body p,.modal-body li{text-align:justify;}
 </style>
 </head>
 <body>
@@ -134,6 +526,7 @@
     <ul class="nav-links">
       <li><a href="#home" data-t="nav-home">Home</a></li>
       <li><a href="#projects" data-t="nav-proj">Projects</a></li>
+      <li><a href="#cad">CAD</a></li>
       <li><a href="#contact" data-t="nav-cont">Contact</a></li>
     </ul>
     <div class="lang">
@@ -158,8 +551,7 @@
 
   <div class="showcase">
     <div class="sc-box">
-
-      <!-- SCENE 1: MULTI-DRONE -->
+      
       <div class="scene on">
         <svg viewBox="0 0 420 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block">
           <text x="210" y="22" fill="#00d9ff" font-size="12.5" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="700">Gesture Multi-Drone Control (Webots)</text>
@@ -240,8 +632,7 @@
           <text x="210" y="340" fill="#00d9ff" font-size="8" text-anchor="middle" font-family="monospace">right hand selects drone &middot; left hand sets direction &middot; all in Webots</text>
         </svg>
       </div>
-
-      <!-- SCENE 2: YOLO TRACKING -->
+      
       <div class="scene">
         <svg viewBox="0 0 420 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block">
           <text x="210" y="22" fill="#00d9ff" font-size="12.5" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="700">Camera Servo Tracking (RPi 4)</text>
@@ -290,56 +681,21 @@
           <text x="210" y="345" fill="#00d9ff" font-size="8" text-anchor="middle" font-family="monospace">P-control keeps person centred &middot; 30fps &middot; 5V external servo supply</text>
         </svg>
       </div>
-
-      <!-- SCENE 3: TB4 QUEUING -->
+      
       <div class="scene">
         <svg viewBox="0 0 420 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block">
-          <defs>
-            <pattern id="gr" width="34" height="34" patternUnits="userSpaceOnUse">
-              <path d="M34 0L0 0 0 34" fill="none" stroke="#00d9ff" stroke-width=".3" opacity=".18"/>
-            </pattern>
-          </defs>
+          <defs><pattern id="gr" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M34 0L0 0 0 34" fill="none" stroke="#00d9ff" stroke-width=".3" opacity=".18"/></pattern></defs>
           <text x="210" y="22" fill="#00d9ff" font-size="12.5" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="700">TurtleBot4 Occupancy Queuing</text>
           <text x="210" y="38" fill="#8892a6" font-size="9" text-anchor="middle" font-family="monospace">ROS2 Jazzy · Nav2 · SLAM · dynamic_occupancy.py</text>
           <rect x="25" y="50" width="370" height="300" fill="url(#gr)"/>
           <rect x="25" y="50" width="370" height="300" fill="none" stroke="#00d9ff" stroke-width="1" opacity=".3"/>
           <text x="40" y="66" fill="#8892a6" font-size="8" font-family="monospace">map view</text>
-          <g transform="translate(95,110)">
-            <circle cx="0" cy="0" r="22" fill="rgba(255,0,110,.12)" stroke="#ff006e" stroke-width="2"/>
-            <circle cx="0" cy="0" r="22" fill="none" stroke="#ff006e" stroke-width="1.5" opacity=".5" style="animation:ringPulse 2s ease-in-out infinite"/>
-            <text x="0" y="4" fill="#ff006e" font-size="9" text-anchor="middle" font-family="monospace">w1</text>
-            <text x="0" y="-30" fill="#ff006e" font-size="8" text-anchor="middle" font-family="monospace">OCCUPIED</text>
-            <circle cx="0" cy="0" r="13" fill="#141824" stroke="#ff006e" stroke-width="1.5"/>
-            <text x="0" y="4" fill="#ff006e" font-size="8" text-anchor="middle" font-family="monospace">t1</text>
-          </g>
-          <g transform="translate(310,155)">
-            <circle cx="0" cy="0" r="22" fill="rgba(255,0,110,.12)" stroke="#ff006e" stroke-width="2"/>
-            <circle cx="0" cy="0" r="22" fill="none" stroke="#ff006e" stroke-width="1.5" opacity=".5" style="animation:ringPulse 2s ease-in-out infinite .6s"/>
-            <text x="0" y="4" fill="#ff006e" font-size="9" text-anchor="middle" font-family="monospace">w2</text>
-            <text x="0" y="-30" fill="#ff006e" font-size="8" text-anchor="middle" font-family="monospace">OCCUPIED</text>
-            <circle cx="0" cy="0" r="13" fill="#141824" stroke="#ff006e" stroke-width="1.5"/>
-            <text x="0" y="4" fill="#ff006e" font-size="8" text-anchor="middle" font-family="monospace">t2</text>
-          </g>
-          <g transform="translate(145,220)">
-            <circle cx="0" cy="0" r="22" fill="rgba(0,217,255,.08)" stroke="#00d9ff" stroke-width="2"/>
-            <text x="0" y="4" fill="#00d9ff" font-size="9" text-anchor="middle" font-family="monospace">w3</text>
-            <text x="0" y="-30" fill="#00d9ff" font-size="8" text-anchor="middle" font-family="monospace">FREE</text>
-          </g>
+          <g transform="translate(95,110)"><circle cx="0" cy="0" r="22" fill="rgba(255,0,110,.12)" stroke="#ff006e" stroke-width="2"/><circle cx="0" cy="0" r="22" fill="none" stroke="#ff006e" stroke-width="1.5" opacity=".5" style="animation:ringPulse 2s ease-in-out infinite"/><text x="0" y="4" fill="#ff006e" font-size="9" text-anchor="middle" font-family="monospace">w1</text><text x="0" y="-30" fill="#ff006e" font-size="8" text-anchor="middle" font-family="monospace">OCCUPIED</text><circle cx="0" cy="0" r="13" fill="#141824" stroke="#ff006e" stroke-width="1.5"/><text x="0" y="4" fill="#ff006e" font-size="8" text-anchor="middle" font-family="monospace">t1</text></g>
+          <g transform="translate(310,155)"><circle cx="0" cy="0" r="22" fill="rgba(255,0,110,.12)" stroke="#ff006e" stroke-width="2"/><circle cx="0" cy="0" r="22" fill="none" stroke="#ff006e" stroke-width="1.5" opacity=".5" style="animation:ringPulse 2s ease-in-out infinite .6s"/><text x="0" y="4" fill="#ff006e" font-size="9" text-anchor="middle" font-family="monospace">w2</text><text x="0" y="-30" fill="#ff006e" font-size="8" text-anchor="middle" font-family="monospace">OCCUPIED</text><circle cx="0" cy="0" r="13" fill="#141824" stroke="#ff006e" stroke-width="1.5"/><text x="0" y="4" fill="#ff006e" font-size="8" text-anchor="middle" font-family="monospace">t2</text></g>
+          <g transform="translate(145,220)"><circle cx="0" cy="0" r="22" fill="rgba(0,217,255,.08)" stroke="#00d9ff" stroke-width="2"/><text x="0" y="4" fill="#00d9ff" font-size="9" text-anchor="middle" font-family="monospace">w3</text><text x="0" y="-30" fill="#00d9ff" font-size="8" text-anchor="middle" font-family="monospace">FREE</text></g>
           <rect x="270" y="310" width="115" height="32" rx="6" fill="#141824" stroke="#7000ff" stroke-width="1.8" stroke-dasharray="5,3"/>
           <text x="327" y="330" fill="#7000ff" font-size="9" text-anchor="middle" font-family="monospace">docking station</text>
-          <g style="animation:t3dock 8s ease-in-out infinite;transform-origin:300px 318px">
-            <g transform="translate(300,318)">
-              <circle cx="0" cy="0" r="20" fill="#141824" stroke="#00d9ff" stroke-width="2.2"/>
-              <circle cx="0" cy="0" r="13" fill="none" stroke="#00d9ff" stroke-width="1" opacity=".5"/>
-              <rect x="-5" y="-10" width="10" height="13" rx="2" fill="#00d9ff" opacity=".8"/>
-              <line x1="0" y1="0" x2="14" y2="0" stroke="#ff006e" stroke-width="2"/>
-              <polygon points="14,-3 20,0 14,3" fill="#ff006e"/>
-              <ellipse cx="-18" cy="-8" rx="2.5" ry="7" fill="#7000ff" opacity=".8"/>
-              <ellipse cx="-18" cy="8" rx="2.5" ry="7" fill="#7000ff" opacity=".8"/>
-              <circle cx="0" cy="0" r="30" fill="none" stroke="#00d9ff" stroke-width="1" opacity=".25" style="animation:ringPulse 2s ease-in-out infinite"/>
-              <text x="0" y="35" fill="#00d9ff" font-size="8" text-anchor="middle" font-family="monospace">t3 &rarr; w3</text>
-            </g>
-          </g>
+          <g style="animation:t3dock 8s ease-in-out infinite;transform-origin:300px 318px"><g transform="translate(300,318)"><circle cx="0" cy="0" r="20" fill="#141824" stroke="#00d9ff" stroke-width="2.2"/><circle cx="0" cy="0" r="13" fill="none" stroke="#00d9ff" stroke-width="1" opacity=".5"/><rect x="-5" y="-10" width="10" height="13" rx="2" fill="#00d9ff" opacity=".8"/><line x1="0" y1="0" x2="14" y2="0" stroke="#ff006e" stroke-width="2"/><polygon points="14,-3 20,0 14,3" fill="#ff006e"/><ellipse cx="-18" cy="-8" rx="2.5" ry="7" fill="#7000ff" opacity=".8"/><ellipse cx="-18" cy="8" rx="2.5" ry="7" fill="#7000ff" opacity=".8"/><circle cx="0" cy="0" r="30" fill="none" stroke="#00d9ff" stroke-width="1" opacity=".25" style="animation:ringPulse 2s ease-in-out infinite"/><text x="0" y="35" fill="#00d9ff" font-size="8" text-anchor="middle" font-family="monospace">t3 &rarr; w3</text></g></g>
           <path d="M 290 312 Q 220 255 165 230" fill="none" stroke="#00d9ff" stroke-width="1.2" stroke-dasharray="5,4" opacity=".5"/>
           <polygon points="168,224 158,232 172,236" fill="#00d9ff" opacity=".5"/>
           <rect x="28" y="320" width="210" height="50" rx="6" fill="#141824" stroke="#00d9ff" stroke-width="1.2" opacity=".9"/>
@@ -349,9 +705,7 @@
           <text x="210" y="388" fill="#00d9ff" font-size="8" text-anchor="middle" font-family="monospace">dynamic_occupancy.py · interactive_navigator.py · Nav2</text>
         </svg>
       </div>
-
     </div>
-
     <div class="sc-dots" id="dots">
       <div class="dot on" onclick="goScene(0)"></div>
       <div class="dot" onclick="goScene(1)"></div>
@@ -359,7 +713,6 @@
     </div>
     <div class="sc-label"><span class="pulse"></span><span id="sc-txt">Gesture Multi-Drone (3&times; UAV)</span></div>
   </div>
-
 </section>
 
 <section id="story">
@@ -374,7 +727,7 @@
     </div>
     <div class="story-txt rev">
       <h3 data-t="about-h3">From Curiosity to Engineering</h3>
-      <p data-t="about-p1">I am a robotics engineer specializing in full-stack architecture, focusing on the seamless integration of mechanical hardware, control software, and artificial intelligence. I am driven by the moment these disciplines converge — whether it's developing autonomous navigation systems or designing custom neural networks for adaptive flight simulations. I don't just write code; I build complete systems that turn complex technical challenges into functional, real-world solutions.</p>
+      <p data-t="about-p1">I am a robotics engineer specializing in full-stack architecture, focusing on the seamless integration of mechanical hardware, control software, and artificial intelligence. I am driven by the moment these disciplines converge, whether it's developing autonomous navigation systems or designing custom neural networks for adaptive flight simulations. I don't just write code; I build complete systems that turn complex technical challenges into functional, real-world solutions.</p>
       <p data-t="about-p2">I am currently pursuing my MSc in Robotics Engineering at Middlesex University, building upon my BEng in Mechatronics with a minor specialization in AI and Machine Learning. My background includes developing award-winning, patent-pending self-balancing systems and vision-based specimen handling platforms using high-precision depth sensing. I am particularly interested in narrowing the gap between "what robots can do" and "what we need them to do" through rigorous validation and system optimization.</p>
       <p data-t="about-p3">When I'm not in the lab, you can find me on the field playing competitive cricket, football, or volleyball. I also enjoy the strategic challenge of a chess match and reading new books.</p>
       <p><strong data-t="about-strong">What drives me?</strong> <span data-t="about-p4">The moment hardware, software, and intelligence converge perfectly.</span></p>
@@ -388,60 +741,178 @@
     <h2 class="stit" data-t="proj-title">Projects</h2>
     <p class="sdesc" data-t="proj-desc">Click any project card to see full details</p>
   </div>
-
   <div class="proj-grid">
 
+    
     <div class="pc rev" onclick="openModal('m-drone')">
+      
+      <div class="pc-img" id="pi-drone">
+        <img class="active" src="images/drone1.jpg" alt="Gesture Drone"
+          onerror="this.style.display='none';document.getElementById('pi-drone-fb').style.display='flex'">
+        <div class="pc-img-fallback" id="pi-drone-fb" style="display:none">🚁</div>
+      </div>
       <div class="pc-head"><h3 data-t="p1-name">Gesture Multi-Drone Control</h3></div>
       <div class="pc-body">
         <p data-t="p1-short">Two-hand gesture control of 3 drones using a custom 5-layer neural network in Webots.</p>
-        <div class="tags"><span class="tag">MediaPipe</span><span class="tag">NumPy NN</span><span class="tag">Webots</span><span class="tag">Python</span></div>
+        
+        <div class="tags">
+          <span class="tag" style="display:flex;align-items:center;gap:4px"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" width="12" height="12" onerror="this.style.display='none'"> Python</span>
+          <span class="tag">MediaPipe</span>
+          <span class="tag">NumPy NN</span>
+          <span class="tag">Webots</span>
+        </div>
         <div class="click-hint" data-t="click">Click to expand &rarr;</div>
       </div>
     </div>
 
+    
     <div class="pc rev" onclick="openModal('m-cam')">
+      <div class="pc-img" id="pi-cam">
+        <img class="active" src="images/servo1.jpg" alt="Camera Tracking"
+          onerror="this.style.display='none';document.getElementById('pi-cam-fb').style.display='flex'">
+        <div class="pc-img-fallback" id="pi-cam-fb" style="display:none">📷</div>
+      </div>
       <div class="pc-head"><h3 data-t="p2-name">Camera Servo Tracking (RPi)</h3></div>
       <div class="pc-body">
         <p data-t="p2-short">YOLO + Picamera2 real-time object tracking with MG996R pan-tilt servos on Raspberry Pi 4.</p>
-        <div class="tags"><span class="tag">YOLOv8</span><span class="tag">Picamera2</span><span class="tag">pigpio</span><span class="tag">RPi4</span></div>
+        <div class="tags">
+          <span class="tag" style="display:flex;align-items:center;gap:4px"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg" width="12" height="12" onerror="this.style.display='none'"> RPi 4</span>
+          <span class="tag">YOLOv8</span>
+          <span class="tag">Picamera2</span>
+          <span class="tag">pigpio</span>
+        </div>
         <div class="click-hint" data-t="click">Click to expand &rarr;</div>
       </div>
     </div>
 
+    
     <div class="pc rev" onclick="openModal('m-tb4')">
+      <div class="pc-img" id="pi-tb4">
+        <img class="active" src="https://raw.githubusercontent.com/MannJanodia3404/Turtlebot4_dynamic_queue_navigation/main/H101_map_by_mann.png" alt="TurtleBot4 Map">
+        <video src="https://raw.githubusercontent.com/MannJanodia3404/Turtlebot4_dynamic_queue_navigation/main/Images/Waypoint_following.mp4" muted loop playsinline></video>
+        <video src="https://raw.githubusercontent.com/MannJanodia3404/Turtlebot4_dynamic_queue_navigation/main/Images/Docking.mp4" muted loop playsinline></video>
+        <div class="pc-img-dots">
+          <button class="pc-img-dot on" onclick="event.stopPropagation();goSlide('pi-tb4',0)"></button>
+          <button class="pc-img-dot" onclick="event.stopPropagation();goSlide('pi-tb4',1)"></button>
+          <button class="pc-img-dot" onclick="event.stopPropagation();goSlide('pi-tb4',2)"></button>
+        </div>
+        <button class="pc-img-prev" onclick="event.stopPropagation();stepSlide('pi-tb4',-1)">&#8249;</button>
+        <button class="pc-img-next" onclick="event.stopPropagation();stepSlide('pi-tb4',1)">&#8250;</button>
+      </div>
       <div class="pc-head"><h3 data-t="p3-name">TurtleBot4 Occupancy Navigation</h3></div>
       <div class="pc-body">
         <p data-t="p3-short">Dynamic waypoint scheduling with occupancy detection for autonomous navigation in real indoor environments.</p>
-        <div class="tags"><span class="tag">Nav2</span><span class="tag">SLAM</span><span class="tag">ROS2</span><span class="tag">Python</span></div>
+        <div class="tags">
+          <span class="tag" style="display:flex;align-items:center;gap:4px"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ros/ros-original.svg" width="12" height="12" style="background:#fff;border-radius:2px;" onerror="this.style.display='none'"> ROS2</span>
+          <span class="tag">Nav2</span><span class="tag">SLAM</span>
+          <span class="tag" style="display:flex;align-items:center;gap:4px"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" width="12" height="12" onerror="this.style.display='none'"> Python</span>
+        </div>
         <div class="click-hint" data-t="click">Click to expand &rarr;</div>
       </div>
     </div>
 
+    
     <div class="pc rev" onclick="openModal('m-p4')">
+      <div class="pc-img" id="pi-ard">
+        <img class="active" src="https://raw.githubusercontent.com/MannJanodia3404/Autonomous_Mapping_Robot_Arduino/main/Image/1.jpg" alt="Arduino Robot">
+        <img src="https://raw.githubusercontent.com/MannJanodia3404/Autonomous_Mapping_Robot_Arduino/main/Image/2.jpg" alt="Arduino Robot 2">
+        <img src="https://raw.githubusercontent.com/MannJanodia3404/Autonomous_Mapping_Robot_Arduino/main/Image/3.jpg" alt="Arduino Robot 3">
+        <img src="https://raw.githubusercontent.com/MannJanodia3404/Autonomous_Mapping_Robot_Arduino/main/Image/Spectacular_Lahdi-Hillar.png" alt="Schematic">
+        <div class="pc-img-dots">
+          <button class="pc-img-dot on" onclick="event.stopPropagation();goSlide('pi-ard',0)"></button>
+          <button class="pc-img-dot" onclick="event.stopPropagation();goSlide('pi-ard',1)"></button>
+          <button class="pc-img-dot" onclick="event.stopPropagation();goSlide('pi-ard',2)"></button>
+          <button class="pc-img-dot" onclick="event.stopPropagation();goSlide('pi-ard',3)"></button>
+        </div>
+        <button class="pc-img-prev" onclick="event.stopPropagation();stepSlide('pi-ard',-1)">&#8249;</button>
+        <button class="pc-img-next" onclick="event.stopPropagation();stepSlide('pi-ard',1)">&#8250;</button>
+      </div>
       <div class="pc-head"><h3 data-t="p4-name">Autonomous Mapping Robot</h3></div>
       <div class="pc-body">
         <p data-t="p4-short">Dual-Arduino robot that autonomously maps a room and executes a planned return journey with equally-spaced scheduled stops.</p>
-        <div class="tags"><span class="tag">Arduino C++</span><span class="tag">HC-SR04</span><span class="tag">DRV8833</span><span class="tag">Encoders</span></div>
+        <div class="tags">
+          <span class="tag" style="display:flex;align-items:center;gap:4px"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" width="12" height="12" onerror="this.style.display='none'"> C++</span>
+          <span class="tag" style="display:flex;align-items:center;gap:4px"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg" width="12" height="12" onerror="this.style.display='none'"> Arduino</span>
+          <span class="tag">HC-SR04</span><span class="tag">DRV8833</span>
+        </div>
         <div class="click-hint" data-t="click">Click to expand &rarr;</div>
       </div>
     </div>
 
+    
     <div class="pc rev" onclick="openModal('m-p5')">
+      <div class="pc-img" id="pi-niryo">
+        <img class="active" src="images/niryo1.jpg" alt="Niryo NED2"
+          onerror="this.style.display='none';document.getElementById('pi-niryo-fb').style.display='flex'">
+        <div class="pc-img-fallback" id="pi-niryo-fb" style="display:none">🦾</div>
+      </div>
       <div class="pc-head"><h3 data-t="p5-name">Niryo NED2 Test Tube Sorting System</h3></div>
       <div class="pc-body">
         <p data-t="p5-short">Fully autonomous lab system combining Niryo NED2 arm, TurtleBot4, and ESP32 RFID to pick, scan, and sort test tubes into bins with zero human intervention.</p>
-        <div class="tags"><span class="tag">PyNiryo</span><span class="tag">Flask</span><span class="tag">ESP32</span><span class="tag">ROS2</span><span class="tag">RFID</span></div>
+        <div class="tags">
+          <span class="tag" style="display:flex;align-items:center;gap:4px"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" width="12" height="12" onerror="this.style.display='none'"> PyNiryo</span>
+          <span class="tag" style="display:flex;align-items:center;gap:4px"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" width="12" height="12" style="filter:invert(1);" onerror="this.style.display='none'"> Flask</span>
+          <span class="tag">ESP32</span><span class="tag">ROS2</span><span class="tag">RFID</span>
+        </div>
         <div class="click-hint" data-t="click">Click to expand &rarr;</div>
       </div>
     </div>
 
-    <div class="pc rev" onclick="openModal('m-p6')">
-      <div class="pc-head"><h3>More Projects Coming Soon</h3></div>
+    
+    <div class="pc rev" onclick="openModal('m-mjolnir')">
+      <div class="pc-img" id="pi-mjol">
+        <img class="active" src="images/mjolnir1.jpg" alt="Mjolnir CAD"
+          onerror="this.style.display='none';document.getElementById('pi-mjol-fb').style.display='flex'">
+        <div class="pc-img-fallback" id="pi-mjol-fb" style="display:none">⚒</div>
+      </div>
+      <div class="pc-head"><h3 data-t="p6-name">Mjolnir CAD Design</h3></div>
       <div class="pc-body">
-        <p>Currently in development. Check back soon or visit my GitHub for the latest work.</p>
+        <p data-t="p6-short">Fully detailed 3D CAD replica of Thor's Mjolnir, designed in Fusion 360. Precise geometry, fillets, and surface detail, ready for 3D printing.</p>
+        <div class="tags"><span class="tag">Fusion 360</span><span class="tag">CAD</span><span class="tag">3D Design</span></div>
+        <div class="click-hint" data-t="click">Click to expand &rarr;</div>
+      </div>
+    </div>
+
+    
+    <div class="pc rev" onclick="openModal('m-arm')">
+      <div class="pc-img" id="pi-arm">
+        <img class="active" src="images/arm1.jpg" alt="Robotic Arm CAD"
+          onerror="this.style.display='none';document.getElementById('pi-arm-fb').style.display='flex'">
+        <div class="pc-img-fallback" id="pi-arm-fb" style="display:none">🦿</div>
+      </div>
+      <div class="pc-head"><h3 data-t="p7-name">Robotic Arm CAD Design</h3></div>
+      <div class="pc-body">
+        <p data-t="p7-short">Multi-DOF robotic arm designed from scratch in Fusion 360. Full assembly with joint definitions and clearance tolerances for servo actuation.</p>
+        <div class="tags"><span class="tag">Fusion 360</span><span class="tag">CAD</span><span class="tag">Mechanical Design</span></div>
+        <div class="click-hint" data-t="click">Click to expand &rarr;</div>
+      </div>
+    </div>
+
+    
+    <div class="pc rev" onclick="openModal('m-lidar')">
+      <div class="pc-img" id="pi-lidar">
+        <img class="active" src="images/lidar1.jpg" alt="LiDAR Robot CAD"
+          onerror="this.style.display='none';document.getElementById('pi-lidar-fb').style.display='flex'">
+        <div class="pc-img-fallback" id="pi-lidar-fb" style="display:none">🤖</div>
+      </div>
+      <div class="pc-head"><h3 data-t="p8-name">4-Wheel LiDAR Robot CAD</h3></div>
+      <div class="pc-body">
+        <p data-t="p8-short">Full chassis CAD for a 4-wheeled differential drive robot with integrated LiDAR mount, sensor housing, and electronics bay. ROS2-ready.</p>
+        <div class="tags">
+          <span class="tag" style="display:flex;align-items:center;gap:4px"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ros/ros-original.svg" width="12" height="12" style="background:#fff;border-radius:2px;" onerror="this.style.display='none'"> ROS2</span>
+          <span class="tag">LiDAR</span><span class="tag">Fusion 360</span><span class="tag">CAD</span>
+        </div>
+        <div class="click-hint" data-t="click">Click to expand &rarr;</div>
+      </div>
+    </div>
+
+    
+    <div class="pc rev" onclick="openModal('m-p6')">
+      <div class="pc-head"><h3 data-t="p9-name">More Projects Coming Soon</h3></div>
+      <div class="pc-body">
+        <p data-t="p9-short">Currently in development. Check back soon or visit my GitHub for the latest work.</p>
         <div class="tags"><span class="tag">In Progress</span></div>
-        <div class="click-hint">Click to expand &rarr;</div>
+        <div class="click-hint" data-t="click">Click to expand &rarr;</div>
       </div>
     </div>
 
@@ -457,29 +928,99 @@
 
     <div class="sk-row rev" onclick="openModal('m-sk1')">
       <div class="sk-cat" data-t="sk1-cat">Programming Languages</div>
-      <div class="chips"><span class="chip">Python</span><span class="chip">C++</span><span class="chip">JavaScript</span><span class="chip">Bash</span><span class="chip">YAML</span><span class="chip">XML (URDF)</span></div>
+      <!-- NEW logos row -->
+      <div class="sk-logos">
+        <div class="sk-logo-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"><span>Python</span></div>
+        <div class="sk-logo-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++"><span>C++</span></div>
+        <div class="sk-logo-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JS"><span>JavaScript</span></div>
+        <div class="sk-logo-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash" style="filter:invert(1) brightness(.8)"><span>Bash</span></div>
+        <div class="sk-logo-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"><span>Git</span></div>
+        <div class="sk-logo-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"><span>Docker</span></div>
+        <div class="sk-logo-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"><span>Linux</span></div>
+        <div class="sk-logo-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code"><span>VS Code</span></div>
+      </div>
     </div>
 
     <div class="sk-row rev" onclick="openModal('m-sk2')">
       <div class="sk-cat" data-t="sk2-cat">Robotics &amp; ROS2</div>
-      <div class="chips"><span class="chip">ROS2 Jazzy</span><span class="chip">Nav2</span><span class="chip">SLAM Toolbox</span><span class="chip">PyNiryo</span><span class="chip">MoveIt2</span><span class="chip">URDF/Xacro</span><span class="chip">RViz2</span><span class="chip">ros2_control</span></div>
+      <div class="sk-logos">
+        <div class="sk-logo-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ros/ros-original.svg" alt="ROS2" style="background:#fff;border-radius:3px;padding:1px"><span>ROS2</span></div>
+        <div class="sk-logo-item"><div class="sk-fb" style="background:rgba(6,182,212,.15);color:#06b6d4">N2</div><span>Nav2</span></div>
+        <div class="sk-logo-item"><div class="sk-fb" style="background:rgba(139,92,246,.15);color:#8b5cf6">SLM</div><span>SLAM</span></div>
+        <div class="sk-logo-item"><div class="sk-fb" style="background:rgba(239,68,68,.15);color:#ef4444">NR</div><span>PyNiryo</span></div>
+        <div class="sk-logo-item"><div class="sk-fb" style="background:rgba(245,158,11,.15);color:#f59e0b">MV2</div><span>MoveIt2</span></div>
+        <div class="sk-logo-item"><div class="sk-fb" style="background:rgba(52,211,153,.15);color:#34d399">ARU</div><span>ArUco</span></div>
+        <div class="sk-logo-item"><div class="sk-fb" style="background:rgba(0,217,255,.15);color:#00d9ff">RV</div><span>RViz2</span></div>
+      </div>
     </div>
 
     <div class="sk-row rev" onclick="openModal('m-sk3')">
       <div class="sk-cat" data-t="sk3-cat">AI &amp; Computer Vision</div>
-      <div class="chips"><span class="chip">TensorFlow/Keras</span><span class="chip">MediaPipe Tasks API</span><span class="chip">OpenCV</span><span class="chip">ArUco</span><span class="chip">YOLOv8 (NCNN)</span><span class="chip">NumPy NN (scratch)</span><span class="chip">scikit-learn</span><span class="chip">Pandas</span></div>
+      <div class="sk-logos">
+        <div class="sk-logo-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TF"><span>TensorFlow</span></div>
+        <div class="sk-logo-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/keras/keras-original.svg" alt="Keras"><span>Keras</span></div>
+        <div class="sk-logo-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg" alt="OpenCV"><span>OpenCV</span></div>
+        <div class="sk-logo-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" alt="NumPy"><span>NumPy</span></div>
+        <div class="sk-logo-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas"><span>Pandas</span></div>
+        <div class="sk-logo-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg" alt="sklearn"><span>scikit-learn</span></div>
+        <div class="sk-logo-item"><div class="sk-fb" style="background:rgba(6,182,212,.15);color:#06b6d4">MP</div><span>MediaPipe</span></div>
+        <div class="sk-logo-item"><div class="sk-fb" style="background:rgba(239,68,68,.15);color:#ef4444">YL</div><span>YOLOv8</span></div>
+      </div>
     </div>
 
     <div class="sk-row rev" onclick="openModal('m-sk4')">
       <div class="sk-cat" data-t="sk4-cat">Hardware</div>
-      <div class="chips"><span class="chip">Niryo NED2 (6-DOF)</span><span class="chip">TurtleBot4</span><span class="chip">Raspberry Pi 4</span><span class="chip">ESP32</span><span class="chip">PN532 RFID</span><span class="chip">Arduino Uno</span><span class="chip">DRV8833</span><span class="chip">MG996R Servos</span><span class="chip">HC-SR04</span><span class="chip">LiDAR</span></div>
+      <div class="sk-logos">
+        <div class="sk-logo-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg" alt="RPi"><span>RPi 4</span></div>
+        <div class="sk-logo-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg" alt="Arduino"><span>Arduino</span></div>
+        <div class="sk-logo-item"><div class="sk-fb" style="background:rgba(239,68,68,.15);color:#ef4444">NR</div><span>Niryo NED2</span></div>
+        <div class="sk-logo-item"><div class="sk-fb" style="background:rgba(34,197,94,.15);color:#22c55e">TB</div><span>TurtleBot4</span></div>
+        <div class="sk-logo-item"><div class="sk-fb" style="background:rgba(245,158,11,.15);color:#f59e0b">E32</div><span>ESP32</span></div>
+        <div class="sk-logo-item"><div class="sk-fb" style="background:rgba(139,92,246,.15);color:#8b5cf6">LDR</div><span>LiDAR</span></div>
+        <div class="sk-logo-item"><div class="sk-fb" style="background:rgba(0,217,255,.15);color:#00d9ff">SRV</div><span>MG996R</span></div>
+        <div class="sk-logo-item"><div class="sk-fb" style="background:rgba(52,211,153,.15);color:#34d399">US</div><span>HC-SR04</span></div>
+      </div>
     </div>
 
     <div class="sk-row rev" onclick="openModal('m-sk5')">
       <div class="sk-cat" data-t="sk5-cat">Tools &amp; Platforms</div>
-      <div class="chips"><span class="chip">Webots</span><span class="chip">Gazebo</span><span class="chip">Flask</span><span class="chip">Git/GitHub</span><span class="chip">Docker</span><span class="chip">Ubuntu 24.04</span><span class="chip">VS Code</span><span class="chip">Arduino IDE</span><span class="chip">pigpio</span></div>
+      <div class="sk-logos">
+        <div class="sk-logo-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask" style="filter:invert(1) brightness(.85)"><span>Flask</span></div>
+        <div class="sk-logo-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" style="filter:invert(1)"><span>GitHub</span></div>
+        <div class="sk-logo-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"><span>Docker</span></div>
+        <div class="sk-logo-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ubuntu/ubuntu-original.svg" alt="Ubuntu"><span>Ubuntu</span></div>
+        <div class="sk-logo-item"><div class="sk-fb" style="background:rgba(249,115,22,.15);color:#f97316">WB</div><span>Webots</span></div>
+        <div class="sk-logo-item"><div class="sk-fb" style="background:rgba(34,197,94,.15);color:#22c55e">GZ</div><span>Gazebo</span></div>
+        <div class="sk-logo-item"><div class="sk-fb" style="background:rgba(249,115,22,.15);color:#f97316">F3D</div><span>Fusion 360</span></div>
+        <div class="sk-logo-item"><div class="sk-fb" style="background:rgba(249,115,22,.15);color:#f97316">F3D</div><span>Fusion 360</span></div>
+      </div>
     </div>
 
+  </div>
+</section>
+
+<section id="cad">
+  <div class="sh rev">
+    <div class="stag" data-t="cad-tag">3D Designs</div>
+    <h2 class="stit" data-t="cad-title">CAD Models</h2>
+    <p class="sdesc">Drag to rotate &nbsp;·&nbsp; Scroll to zoom &nbsp;·&nbsp; Right-drag to pan</p>
+  </div>
+  <div class="cad-shell">
+    <div class="cad-topbar">
+      <div>
+        <div class="cad-model-name" id="cad-name">MJOLNIR: Thor's Hammer</div>
+        <div class="cad-model-desc" id="cad-desc">Fully detailed CAD replica · Fusion 360</div>
+      </div>
+      <div class="cad-ctrl-row">
+        <button class="cad-ctrl-btn" onclick="cadReset()">Reset View</button>
+        <button class="cad-ctrl-btn" id="wire-btn" onclick="cadWireToggle()">Wireframe</button>
+        <button class="cad-ctrl-btn" onclick="cadRotate()">Rotate 90&deg;</button>
+        <a class="cad-ctrl-btn" id="cad-gh" href="https://github.com/MannJanodia3404/Mj-lnir_Cad" target="_blank">↗ GitHub</a>
+      </div>
+    </div>
+    <canvas id="cad-canvas"></canvas>
+    <div class="cad-hint">🖱 Drag to rotate &nbsp;·&nbsp; Scroll to zoom &nbsp;·&nbsp; Right-drag to pan</div>
+    <div class="cad-model-tabs" id="cad-tabs"></div>
   </div>
 </section>
 
@@ -489,38 +1030,53 @@
     <h2 class="stit" data-t="exp-title">Experience</h2>
     <p class="sdesc" data-t="exp-desc">Internships and roles that shaped my engineering journey</p>
   </div>
+  
   <div class="exp-list">
-
-    <div class="exp-row rev">
-      <div class="exp-date">2025</div>
-      <div class="exp-info">
-        <h3 data-t="e1-role">Radio Frequency Engineer</h3>
-        <div class="exp-co" data-t="e1-co">Optimized Solutions Limited</div>
-        <p class="exp-desc" data-t="e1-desc">Developed and validated RF-enabled embedded systems through rigorous signal analysis, environmental stress testing, and systematic hardware debugging to ensure reliability and compliance.</p>
-        <div class="exp-tags"><span class="etag">RF Signal Analysis</span><span class="etag">Environmental Testing</span><span class="etag">Hardware Debugging</span><span class="etag">Technical Documentation</span></div>
+    <div class="exp-row rev" onclick="this.classList.toggle('exp-open')" style="cursor:pointer;border:1px solid rgba(0,217,255,.1);border-radius:12px;overflow:hidden;margin-bottom:.65rem;transition:border-color .2s;">
+      <div style="display:flex;align-items:center;padding:.85rem 1.1rem;gap:.85rem;">
+        <div class="exp-date">2025</div>
+        <div class="exp-info" style="flex:1;"><h3 data-t="e1-role">Radio Frequency Engineer</h3><div class="exp-co" data-t="e1-co">Optimized Solutions Limited</div></div>
+        <span class="exp-arr" style="color:rgba(0,217,255,.5);transition:transform .3s;font-size:.65rem;flex-shrink:0;font-family:'IBM Plex Mono',monospace;letter-spacing:-.02em;">tags &#9658;</span>
+      </div>
+      <div style="padding:.1rem 1.1rem .6rem;">
+        <p class="exp-desc" data-t="e1-desc" style="font-size:.84rem;line-height:1.68;color:#8892a6;text-align:justify;margin:0;">Developed and validated RF-enabled embedded systems through rigorous signal analysis, environmental stress testing, and systematic hardware debugging to ensure reliability and compliance.</p>
+      </div>
+      <div class="exp-body" style="max-height:0;overflow:hidden;transition:max-height .38s ease;">
+        <div style="padding:0 1.1rem .9rem;">
+          <div class="exp-tags"><span class="etag">RF Signal Analysis</span><span class="etag">Environmental Testing</span><span class="etag">Hardware Debugging</span><span class="etag">Technical Documentation</span></div>
+        </div>
       </div>
     </div>
-
-    <div class="exp-row rev">
-      <div class="exp-date">2024</div>
-      <div class="exp-info">
-        <h3 data-t="e2-role">Electrical Engineer</h3>
-        <div class="exp-co" data-t="e2-co">Bosch Rexroth</div>
-        <p class="exp-desc" data-t="e2-desc">Conducted fault diagnosis and sensor calibration for hydraulic and electromechanical systems within cross-functional validation and verification teams.</p>
-        <div class="exp-tags"><span class="etag">Fault Diagnosis</span><span class="etag">Sensor Calibration</span><span class="etag">Electromechanical Systems</span><span class="etag">Verification</span></div>
+    <div class="exp-row rev" onclick="this.classList.toggle('exp-open')" style="cursor:pointer;border:1px solid rgba(0,217,255,.1);border-radius:12px;overflow:hidden;margin-bottom:.65rem;transition:border-color .2s;">
+      <div style="display:flex;align-items:center;padding:.85rem 1.1rem;gap:.85rem;">
+        <div class="exp-date">2024</div>
+        <div class="exp-info" style="flex:1;"><h3 data-t="e2-role">Electrical Engineer</h3><div class="exp-co" data-t="e2-co">Bosch Rexroth</div></div>
+        <span class="exp-arr" style="color:rgba(0,217,255,.5);transition:transform .3s;font-size:.65rem;flex-shrink:0;font-family:'IBM Plex Mono',monospace;letter-spacing:-.02em;">tags &#9658;</span>
+      </div>
+      <div style="padding:.1rem 1.1rem .6rem;">
+        <p class="exp-desc" data-t="e2-desc" style="font-size:.84rem;line-height:1.68;color:#8892a6;text-align:justify;margin:0;">Conducted fault diagnosis and sensor calibration for hydraulic and electromechanical systems within cross-functional validation and verification teams.</p>
+      </div>
+      <div class="exp-body" style="max-height:0;overflow:hidden;transition:max-height .38s ease;">
+        <div style="padding:0 1.1rem .9rem;">
+          <div class="exp-tags"><span class="etag">Fault Diagnosis</span><span class="etag">Sensor Calibration</span><span class="etag">Electromechanical Systems</span><span class="etag">Verification</span></div>
+        </div>
       </div>
     </div>
-
-    <div class="exp-row rev">
-      <div class="exp-date">2023</div>
-      <div class="exp-info">
-        <h3 data-t="e3-role">Firmware Lead</h3>
-        <div class="exp-co" data-t="e3-co">Robofest</div>
-        <p class="exp-desc" data-t="e3-desc">Led firmware development and oversaw full hardware and electronics integration for a competitive robotics platform. Responsible for embedded software architecture, sensor interfacing, motor control pipelines, and ensuring reliable communication between all electronic subsystems.</p>
-        <div class="exp-tags"><span class="etag">Firmware Development</span><span class="etag">Hardware Integration</span><span class="etag">Electronics</span><span class="etag">Embedded Systems</span></div>
+    <div class="exp-row rev" onclick="this.classList.toggle('exp-open')" style="cursor:pointer;border:1px solid rgba(0,217,255,.1);border-radius:12px;overflow:hidden;margin-bottom:.65rem;transition:border-color .2s;">
+      <div style="display:flex;align-items:center;padding:.85rem 1.1rem;gap:.85rem;">
+        <div class="exp-date">2023</div>
+        <div class="exp-info" style="flex:1;"><h3 data-t="e3-role">Firmware Lead</h3><div class="exp-co" data-t="e3-co">Robofest</div></div>
+        <span class="exp-arr" style="color:rgba(0,217,255,.5);transition:transform .3s;font-size:.65rem;flex-shrink:0;font-family:'IBM Plex Mono',monospace;letter-spacing:-.02em;">tags &#9658;</span>
+      </div>
+      <div style="padding:.1rem 1.1rem .6rem;">
+        <p class="exp-desc" data-t="e3-desc" style="font-size:.84rem;line-height:1.68;color:#8892a6;text-align:justify;margin:0;">Led firmware development and oversaw full hardware and electronics integration for a competitive robotics platform. Responsible for embedded software architecture, sensor interfacing, motor control pipelines, and ensuring reliable communication between all electronic subsystems.</p>
+      </div>
+      <div class="exp-body" style="max-height:0;overflow:hidden;transition:max-height .38s ease;">
+        <div style="padding:0 1.1rem .9rem;">
+          <div class="exp-tags"><span class="etag">Firmware Development</span><span class="etag">Hardware Integration</span><span class="etag">Electronics</span><span class="etag">Embedded Systems</span></div>
+        </div>
       </div>
     </div>
-
   </div>
 </section>
 
@@ -538,7 +1094,8 @@
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
         <span data-t="soc-li">LinkedIn</span>
       </a>
-      <a href="resume.pdf" download class="soc">
+      
+      <a href="#" class="soc" onclick="openResume();return false;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         <span data-t="soc-cv">Resume</span>
       </a>
@@ -550,205 +1107,752 @@
 
 </div>
 
-<!-- ===== MODALS ===== -->
 <div class="overlay" id="overlay" onclick="handleOverlayClick(event)">
   <div class="modal" id="modal-inner">
 
-    <!-- PROJECT 1: GESTURE MULTI-DRONE -->
     <div id="m-drone" class="modal-content">
-      <div class="modal-head">
-        <div><h2 data-t="p1-name">Gesture Multi-Drone Control</h2><div class="badge">AI &middot; Custom NN &middot; Webots &middot; Robotics</div></div>
-        <button class="close-btn" onclick="closeModal()">&#10005;</button>
-      </div>
-      <div class="modal-body">
+      <div class="modal-head"><div><h2 data-t="p1-name">Gesture Multi-Drone Control</h2><div class="badge">AI &middot; Custom NN &middot; Webots &middot; Robotics</div></div><button class="close-btn" onclick="closeModal()">&#10005;</button></div>
+      <div class="m2c"><div class="modal-body">
         <h4 data-t="m-overview">Overview</h4>
-        <p data-t="m-drone-ov">A fully gesture-driven system to control 3 simulated DJI Mavic2Pro drones in Webots using only hand gestures captured by a laptop webcam. Two separate neural networks — both built entirely from scratch in NumPy — classify left-hand pose (which drone to select) and right-hand pose (what action to perform), with results written to a shared JSON file that each drone's controller reads every 8ms.</p>
+        <p data-t="m-drone-ov">A fully gesture-driven system to control 3 simulated DJI Mavic2Pro drones in Webots using only hand gestures captured by a laptop webcam. Two separate neural networks, both built from scratch in NumPy, to classify left-hand pose (which drone to select) and right-hand pose (what action to perform), with results written to a shared JSON file that each drone's controller reads every 8ms.</p>
         <h4 data-t="m-challenges">Key Achievements</h4>
         <ul>
-          <li><strong>Two-hand control scheme:</strong> Left hand selects drone(s) — 1/2/3 fingers or open palm for all. Right hand commands action — Takeoff, Land, Altitude Up/Down, Flip Forward, Hover</li>
-          <li><strong>Custom 5-layer FC-NN from scratch:</strong> 35&rarr;64(ReLU)&rarr;32(ReLU)&rarr;16(Tanh)&rarr;N(Softmax), with L2 regularisation and cross-entropy loss — no PyTorch, no TensorFlow</li>
-          <li><strong>Three optimisers implemented:</strong> Adam (first-order), L-BFGS (quasi-Newton, second-order), Nelder-Mead (zero-order gradient-free) — compared experimentally with 5-fold CV</li>
-          <li><strong>35-feature hand vector:</strong> 10 fingertip relative positions, 5 extension angles, 3 wrist orientation values, 2 palm centre offsets, extracted per hand from MediaPipe HandLandmarker (21 landmarks)</li>
-          <li><strong>PID altitude control + motor mixing:</strong> P-controller (K_P=3.0) drives 4 motors per drone; mass compensation adjusts thrust proportionally when payload changes mid-flight</li>
-          <li><strong>Flip state machine:</strong> 3-stage (Windup 160ms &rarr; Rotate 320ms &rarr; Recover 240ms) for safe mid-air forward flips at &gt;1.5m altitude</li>
-          <li><strong>Fail-safe:</strong> No gesture detected for &gt;2s &rarr; drones hold position autonomously</li>
-          <li>Personally recorded 800&ndash;1,200 hand-gesture training samples across 10 gesture classes (4 left-hand, 6 right-hand)</li>
+          <li data-t="drone-li1"><strong>Two-hand control:</strong> Left hand selects drone (1/2/3 fingers or open palm for all). Right hand commands: Takeoff, Land, Altitude Up/Down, Flip Forward, Hover.</li>
+          <li data-t="drone-li2"><strong>Custom 5-layer FC-NN from scratch:</strong> 35 &rarr; 64(ReLU) &rarr; 32(ReLU) &rarr; 16(Tanh) &rarr; N(Softmax), L2 regularisation, cross-entropy loss. No PyTorch, no TensorFlow.</li>
+          <li data-t="drone-li3"><strong>Three optimisers:</strong> Adam, L-BFGS, and Nelder-Mead compared with 5-fold cross-validation.</li>
+          <li data-t="drone-li4"><strong>35-feature hand vector</strong> from MediaPipe HandLandmarker: 10 fingertip positions, 5 extension angles, 3 wrist orientations, 2 palm offsets.</li>
+          <li data-t="drone-li5"><strong>Flip state machine:</strong> Windup 160ms &rarr; Rotate 320ms &rarr; Recover 240ms for safe forward flips above 1.5m altitude.</li>
+          <li data-t="drone-li6"><strong>Fail-safe:</strong> No gesture for &gt;2s causes all drones to hold position autonomously.</li>
+          <li data-t="drone-li7">Personally recorded 800 to 1,200 training samples across 10 gesture classes.</li>
         </ul>
-        <div class="stats-row">
-          <div class="stat"><div class="sv">94.2%</div><div class="sl">Accuracy</div></div>
-          <div class="stat"><div class="sv">&lt;50ms</div><div class="sl">Latency</div></div>
-          <div class="stat"><div class="sv">5,031</div><div class="sl">NN Params</div></div>
-        </div>
-        <div class="modal-links">
-          <a href="https://github.com/MannJanodia3404" class="mlink" target="_blank" data-t="lnk-gh">GitHub Profile &rarr;</a>
-        </div>
-      </div>
+        <div class="stats-row"><div class="stat"><div class="sv">94.2%</div><div class="sl">Accuracy</div></div><div class="stat"><div class="sv">&lt;50ms</div><div class="sl">Latency</div></div><div class="stat"><div class="sv">5,031</div><div class="sl">NN Params</div></div></div>
+        <div class="modal-links"><a href="https://github.com/MannJanodia3404" class="mlink" target="_blank" data-t="lnk-gh">GitHub Profile &rarr;</a></div>
+      </div><div class="mmp"><div class="mmp-hd">Media</div><div class="mmp-track" id="mmp0716a" data-cur="0"><div class="mmp-inner"><div class="mmp-slide"><img src="images/drone1.jpg" alt="Gesture Setup" onerror="this.style.display='none'"><div class="mmp-cap">Gesture Setup</div></div><div class="mmp-slide"><img src="images/drone2.jpg" alt="Webots Simulation" onerror="this.style.display='none'"><div class="mmp-cap">Webots Simulation</div></div></div><button class="mmp-arr mmp-al" onclick="mmpStep('mmp0716a',-1)">&#8249;</button><button class="mmp-arr mmp-ar" onclick="mmpStep('mmp0716a',1)">&#8250;</button></div><div class="mmp-nav"><button class="mmp-dot on" onclick="mmpGo('mmp0716a',0)"></button><button class="mmp-dot" onclick="mmpGo('mmp0716a',1)"></button></div></div></div>
     </div>
 
-    <!-- PROJECT 2: CAMERA TRACKING -->
     <div id="m-cam" class="modal-content">
-      <div class="modal-head">
-        <div><h2 data-t="p2-name">Camera Servo Tracking (RPi)</h2><div class="badge">Computer Vision &middot; Embedded</div></div>
-        <button class="close-btn" onclick="closeModal()">&#10005;</button>
-      </div>
-      <div class="modal-body">
-        <h4 data-t="m-overview">Overview</h4>
-        <p data-t="m-cam-ov">Real-time multi-object detection and tracking on Raspberry Pi 4 using YOLOv8 (NCNN-exported) with two MG996R servos for pan-tilt camera control.</p>
+      <div class="modal-head"><div><h2 data-t="p2-name">Camera Servo Tracking (RPi)</h2><div class="badge">Computer Vision &middot; Embedded</div></div><button class="close-btn" onclick="closeModal()">&#10005;</button></div>
+      <div class="m2c"><div class="modal-body">
+        <h4 data-t="m-overview">Overview</h4><p data-t="m-cam-ov">Real-time multi-object detection and tracking on Raspberry Pi 4 using YOLOv8 (NCNN-exported) with two MG996R servos for pan-tilt camera control.</p>
         <h4 data-t="m-challenges">Key Achievements</h4>
-        <ul>
-          <li>Picamera2 + YOLOv8n NCNN model for low-latency inference on Pi hardware</li>
-          <li>PID-style proportional control keeps selected class centred in frame</li>
-          <li>Configurable target class (default: person), deadband, max step angle, gain</li>
-          <li>External 5V servo power supply; pigpio for PWM on GPIO17/18</li>
-        </ul>
-        <div class="stats-row">
-          <div class="stat"><div class="sv">30fps</div><div class="sl">Speed</div></div>
-          <div class="stat"><div class="sv">320&times;240</div><div class="sl">Resolution</div></div>
-          <div class="stat"><div class="sv">P-ctrl</div><div class="sl">Algorithm</div></div>
-        </div>
-        <div class="modal-links">
-          <a href="https://github.com/MannJanodia3404/Object_Detection_and_Tracking" class="mlink" target="_blank" data-t="lnk-gh">GitHub &rarr;</a>
-        </div>
-      </div>
+        <ul><li data-t="cam-li1">Picamera2 and YOLOv8n NCNN model for low-latency on-device inference without a GPU.</li><li data-t="cam-li2">Proportional control keeps the selected class centred in frame with configurable deadband, max step angle, and gain.</li><li data-t="cam-li3">External 5V servo power supply prevents Pi brownout under servo load.</li><li data-t="cam-li4">pigpio PWM on GPIO17 for pan and GPIO18 for tilt.</li></ul>
+        <div class="stats-row"><div class="stat"><div class="sv">30fps</div><div class="sl">Speed</div></div><div class="stat"><div class="sv">320&times;240</div><div class="sl">Resolution</div></div><div class="stat"><div class="sv">P-ctrl</div><div class="sl">Algorithm</div></div></div>
+        <div class="modal-links"><a href="https://github.com/MannJanodia3404/Object_Detection_and_Tracking" class="mlink" target="_blank">GitHub &rarr;</a></div>
+      </div><div class="mmp"><div class="mmp-hd">Media</div><div class="mmp-track" id="mmpd7fd8" data-cur="0"><div class="mmp-inner"><div class="mmp-slide"><img src="images/servo1.jpg" alt="RPi Setup" onerror="this.style.display='none'"><div class="mmp-cap">RPi Setup</div></div></div></div><div class="mmp-nav"><button class="mmp-dot on" onclick="mmpGo('mmpd7fd8',0)"></button></div></div></div>
     </div>
 
-    <!-- PROJECT 3: TURTLEBOT4 -->
     <div id="m-tb4" class="modal-content">
-      <div class="modal-head">
-        <div><h2 data-t="p3-name">TurtleBot4 Occupancy Navigation</h2><div class="badge">Autonomous Navigation &middot; ROS2</div></div>
-        <button class="close-btn" onclick="closeModal()">&#10005;</button>
-      </div>
-      <div class="modal-body">
-        <h4 data-t="m-overview">Overview</h4>
-        <p data-t="m-tb4-ov">Dynamic waypoint scheduling with occupancy detection for autonomous mobile robot navigation using Nav2 and SLAM on TurtleBot 4. Deployed in a real indoor environment (H101 lab map at Coventry University).</p>
+      <div class="modal-head"><div><h2 data-t="p3-name">TurtleBot4 Occupancy Navigation</h2><div class="badge">Autonomous Navigation &middot; ROS2</div></div><button class="close-btn" onclick="closeModal()">&#10005;</button></div>
+      <div class="m2c"><div class="modal-body">
+        <h4 data-t="m-overview">Overview</h4><p data-t="m-tb4-ov">Dynamic waypoint scheduling with occupancy detection for autonomous mobile robot navigation using Nav2 and SLAM on TurtleBot 4. Deployed in a real indoor environment (H101 lab map at Coventry University).</p>
         <h4 data-t="m-challenges">Key Achievements</h4>
-        <ul>
-          <li>Built <code>dynamic_occupancy.py</code> — server tracking FREE/OCCUPIED state per waypoint and queue slot in real time</li>
-          <li>Built <code>interactive_navigator.py</code> — client sending Nav2 goals, auto-rerouting to queues when waypoints are occupied</li>
-          <li>6-waypoint system including pre-dock position and full autonomous docking sequence</li>
-          <li>Deployed on TurtleBot4 with ROS2 Jazzy + AMCL localization on Ubuntu 24.04</li>
-          <li>5-terminal launch sequence: localization, Nav2, RViz2, occupancy server, interactive navigator</li>
-        </ul>
-        <div class="stats-row">
-          <div class="stat"><div class="sv">6</div><div class="sl">Waypoints</div></div>
-          <div class="stat"><div class="sv">Nav2</div><div class="sl">Framework</div></div>
-          <div class="stat"><div class="sv">SLAM</div><div class="sl">Localization</div></div>
-        </div>
-        <div class="modal-links">
-          <a href="https://github.com/MannJanodia3404/Turtlebot4_dynamic_queue_navigation" class="mlink" target="_blank" data-t="lnk-gh">GitHub &rarr;</a>
-        </div>
-      </div>
+        <ul><li data-t="tb4-li1">Built <code>dynamic_occupancy.py</code>: server tracking FREE and OCCUPIED state per waypoint in real time.</li><li data-t="tb4-li2">Built <code>interactive_navigator.py</code>: sends Nav2 goals and auto-reroutes when waypoints are occupied.</li><li data-t="tb4-li3">6-waypoint system including pre-dock position and full autonomous docking sequence.</li><li data-t="tb4-li4">Deployed on TurtleBot4 with ROS2 Jazzy and AMCL localisation on Ubuntu 24.04.</li><li data-t="tb4-li5">5-terminal launch: localisation, Nav2, RViz2, occupancy server, interactive navigator.</li></ul>
+        <div class="stats-row"><div class="stat"><div class="sv">6</div><div class="sl">Waypoints</div></div><div class="stat"><div class="sv">Nav2</div><div class="sl">Framework</div></div><div class="stat"><div class="sv">SLAM</div><div class="sl">Localization</div></div></div>
+        <div class="modal-links"><a href="https://github.com/MannJanodia3404/Turtlebot4_dynamic_queue_navigation" class="mlink" target="_blank">GitHub &rarr;</a></div>
+      </div><div class="mmp"><div class="mmp-hd">Lab Map and Videos</div><div class="mmp-track" id="mmp17185" data-cur="0"><div class="mmp-inner"><div class="mmp-slide"><img src="https://raw.githubusercontent.com/MannJanodia3404/Turtlebot4_dynamic_queue_navigation/main/H101_map_by_mann.png" alt="H101 SLAM Map" onerror="this.style.display='none'"><div class="mmp-cap">H101 SLAM Map</div></div><div class="mmp-slide"><video src="https://raw.githubusercontent.com/MannJanodia3404/Turtlebot4_dynamic_queue_navigation/main/Images/Waypoint_following.mp4" controls muted playsinline></video><div class="mmp-cap">Waypoint Following</div></div><div class="mmp-slide"><video src="https://raw.githubusercontent.com/MannJanodia3404/Turtlebot4_dynamic_queue_navigation/main/Images/Docking.mp4" controls muted playsinline></video><div class="mmp-cap">Autonomous Docking</div></div><div class="mmp-slide"><video src="https://raw.githubusercontent.com/MannJanodia3404/Turtlebot4_dynamic_queue_navigation/main/Images/Waypoint1_follow.mp4" controls muted playsinline></video><div class="mmp-cap">Waypoint 1 Demo</div></div></div><button class="mmp-arr mmp-al" onclick="mmpStep('mmp17185',-1)">&#8249;</button><button class="mmp-arr mmp-ar" onclick="mmpStep('mmp17185',1)">&#8250;</button></div><div class="mmp-nav"><button class="mmp-dot on" onclick="mmpGo('mmp17185',0)"></button><button class="mmp-dot" onclick="mmpGo('mmp17185',1)"></button><button class="mmp-dot" onclick="mmpGo('mmp17185',2)"></button><button class="mmp-dot" onclick="mmpGo('mmp17185',3)"></button></div></div></div>
     </div>
 
-    <!-- PROJECT 4: ARDUINO MAPPING ROBOT -->
     <div id="m-p4" class="modal-content">
-      <div class="modal-head">
-        <div><h2 data-t="p4-name">Autonomous Mapping Robot</h2><div class="badge">Embedded &middot; C++ &middot; Robotics</div></div>
-        <button class="close-btn" onclick="closeModal()">&#10005;</button>
-      </div>
-      <div class="modal-body">
-        <h4 data-t="m-overview">Overview</h4>
-        <p>A dual-Arduino autonomous robot that maps a room using HC-SR04 ultrasonic sensors and encoder odometry, then executes a planned return journey with 5 equally-spaced scheduled stops. Clean Master/Slave architecture separates sensing from motor control across two Arduino Uno boards.</p>
+      <div class="modal-head"><div><h2 data-t="p4-name">Autonomous Mapping Robot</h2><div class="badge">Embedded &middot; C++ &middot; Robotics</div></div><button class="close-btn" onclick="closeModal()">&#10005;</button></div>
+      <div class="m2c"><div class="modal-body">
+        <h4 data-t="m-overview">Overview</h4><p data-t="m-p4-ov">A dual-Arduino autonomous robot that maps a room using HC-SR04 ultrasonic sensors and encoder odometry, then executes a planned return journey with 5 equally-spaced scheduled stops. Clean Master/Slave architecture separates sensing from motor control across two Arduino Uno boards.</p>
         <h4 data-t="m-challenges">Key Achievements</h4>
-        <ul>
-          <li>Master (sensor board) sends commands &lt;MAP&gt;, &lt;RUN&gt;, &lt;STOP&gt;, &lt;SLOW&gt; to the Slave (motor board) via serial</li>
-          <li>Encoder-based odometry: 850 counts = 1 wheel revolution &mdash; minimum detectable movement ~7&mu;m</li>
-          <li>Bridge detection via upward-facing HC-SR04: auto-slows to 50% speed through narrow passages, then resumes</li>
-          <li>Rear obstacle safety: unexpected obstacle triggers emergency stop with red LED indicator</li>
-          <li>DRV8833 motor driver with tunable <code>LEFT_SPEED_CORRECTION</code> constant for drift compensation</li>
-          <li>Configurable number of stops via <code>NUM_INTERVALS</code> constant &mdash; no re-wiring needed</li>
-        </ul>
-        <div class="stats-row">
-          <div class="stat"><div class="sv">~7&mu;m</div><div class="sl">Precision</div></div>
-          <div class="stat"><div class="sv">36.6</div><div class="sl">cm/s Max</div></div>
-          <div class="stat"><div class="sv">2&times; Uno</div><div class="sl">Boards</div></div>
-        </div>
-        <div class="modal-links">
-          <a href="https://github.com/MannJanodia3404/Autonomous_Mapping_Robot_Arduino" class="mlink" target="_blank" data-t="lnk-gh">GitHub &rarr;</a>
-        </div>
-      </div>
+        <ul><li data-t="ard-li1">Master board sends MAP, RUN, STOP, SLOW commands to the Slave motor board via serial.</li><li data-t="ard-li2">Encoder odometry: 850 counts per revolution, minimum detectable movement approximately 7 micrometres.</li><li data-t="ard-li3">Bridge detection via upward HC-SR04: auto-slows to 50% speed through narrow passages.</li><li data-t="ard-li4">Rear obstacle safety: emergency stop with red LED on unexpected obstacle.</li><li data-t="ard-li5">DRV8833 motor driver with tunable LEFT_SPEED_CORRECTION for drift compensation.</li><li data-t="ard-li6">Configurable stop count via NUM_INTERVALS constant, no re-wiring needed.</li></ul>
+        <div class="stats-row"><div class="stat"><div class="sv">~7&mu;m</div><div class="sl">Precision</div></div><div class="stat"><div class="sv">36.6</div><div class="sl">cm/s Max</div></div><div class="stat"><div class="sv">2&times; Uno</div><div class="sl">Boards</div></div></div>
+        <div class="modal-links"><a href="https://github.com/MannJanodia3404/Autonomous_Mapping_Robot_Arduino" class="mlink" target="_blank">GitHub &rarr;</a></div>
+      </div><div class="mmp"><div class="mmp-hd">Robot Photos</div><div class="mmp-track" id="mmpaeabf" data-cur="0"><div class="mmp-inner"><div class="mmp-slide"><img src="https://raw.githubusercontent.com/MannJanodia3404/Autonomous_Mapping_Robot_Arduino/main/Image/1.jpg" alt="Photo 1" onerror="this.style.display='none'"><div class="mmp-cap">Photo 1</div></div><div class="mmp-slide"><img src="https://raw.githubusercontent.com/MannJanodia3404/Autonomous_Mapping_Robot_Arduino/main/Image/2.jpg" alt="Photo 2" onerror="this.style.display='none'"><div class="mmp-cap">Photo 2</div></div><div class="mmp-slide"><img src="https://raw.githubusercontent.com/MannJanodia3404/Autonomous_Mapping_Robot_Arduino/main/Image/3.jpg" alt="Photo 3" onerror="this.style.display='none'"><div class="mmp-cap">Photo 3</div></div><div class="mmp-slide"><img src="https://raw.githubusercontent.com/MannJanodia3404/Autonomous_Mapping_Robot_Arduino/main/Image/Spectacular_Lahdi-Hillar.png" alt="Schematic" onerror="this.style.display='none'"><div class="mmp-cap">Schematic</div></div></div><button class="mmp-arr mmp-al" onclick="mmpStep('mmpaeabf',-1)">&#8249;</button><button class="mmp-arr mmp-ar" onclick="mmpStep('mmpaeabf',1)">&#8250;</button></div><div class="mmp-nav"><button class="mmp-dot on" onclick="mmpGo('mmpaeabf',0)"></button><button class="mmp-dot" onclick="mmpGo('mmpaeabf',1)"></button><button class="mmp-dot" onclick="mmpGo('mmpaeabf',2)"></button><button class="mmp-dot" onclick="mmpGo('mmpaeabf',3)"></button></div></div></div>
     </div>
 
-    <!-- PROJECT 5: NIRYO TEST TUBE SORTING -->
     <div id="m-p5" class="modal-content">
-      <div class="modal-head">
-        <div><h2 data-t="p5-name">Niryo NED2 Test Tube Sorting System</h2><div class="badge">Robotics &middot; RFID &middot; ROS2 &middot; Embedded</div></div>
-        <button class="close-btn" onclick="closeModal()">&#10005;</button>
-      </div>
-      <div class="modal-body">
-        <h4 data-t="m-overview">Overview</h4>
-        <p>A fully autonomous three-component lab robotics system that combines mobile navigation, 6-DOF manipulation, and RFID identification to sort test tubes into the correct bins without any human intervention. TurtleBot4 transports loaded tube holders from a pickup point to the docking station, triggering the Niryo NED2 arm via HTTP REST API to pick each tube, scan it with an ESP32+PN532 RFID reader, and place it in the correct bin slot — all orchestrated through event-driven threading.</p>
+      <div class="modal-head"><div><h2 data-t="p5-name">Niryo NED2 Test Tube Sorting System</h2><div class="badge">Robotics &middot; RFID &middot; ROS2 &middot; Embedded</div></div><button class="close-btn" onclick="closeModal()">&#10005;</button></div>
+      <div class="m2c"><div class="modal-body">
+        <h4 data-t="m-overview">Overview</h4><p data-t="m-p5-ov">A fully autonomous three-component lab robotics system combining mobile navigation, 6-DOF manipulation, and RFID identification to sort test tubes without human intervention.</p>
         <h4 data-t="m-challenges">Key Achievements</h4>
-        <ul>
-          <li><strong>Three-layer architecture:</strong> Hardware (NED2 + TurtleBot4 + ESP32), Software (ROS2 + PyNiryo + Flask), Integration (HTTP REST API + threading events + thread-safe state)</li>
-          <li><strong>Flask REST API with 6 endpoints:</strong> <code>/start_niryo</code>, <code>/rfid</code>, <code>/niryo_done</code>, <code>/status</code>, <code>/emergency_stop</code>, <code>/reset</code> — enabling fully decoupled multi-robot coordination</li>
-          <li><strong>Event-driven RFID sync:</strong> <code>threading.Event()</code> blocks the Niryo thread at the scanner position until the ESP32 sends the tag UID via WiFi HTTP GET, then unblocks to route to the correct bin</li>
-          <li><strong>4-bin Cartesian sorting:</strong> Niryo uses hardcoded joint-space waypoints (Approach &rarr; Place Approach &rarr; Place) at SLOW_SPEED (20%) for safe tube insertion; 4 UID-to-bin mappings in <code>rfid_bin_map</code></li>
-          <li><strong>ESP32 + PN532 RFID scanner:</strong> I2C on GPIO21/22, MIFARE ISO14443A, &lt;5cm range — reads tag UID and fires HTTP GET to Flask server; Arduino C firmware with WiFi, Wire, HTTPClient libraries</li>
-          <li><strong>TurtleBot4 coordinator:</strong> ROS2 Nav2-driven loop — navigate to pickup &rarr; dock &rarr; trigger Niryo &rarr; poll <code>/niryo_done</code> &rarr; undock &rarr; clear costmaps &rarr; repeat</li>
-          <li><strong>Collision recovery:</strong> Auto-clears collision detected flag and retries movement; safe fallback to home position on critical errors; emergency stop via learning mode enable</li>
-          <li>4 test tubes per cycle across 2 bins (A &amp; B) with 2 slots each; post-dock costmap clearing + 2s AMCL settle prevents Nav2 localisation drift between cycles</li>
-        </ul>
-        <div class="stats-row">
-          <div class="stat"><div class="sv">4</div><div class="sl">Tubes/Cycle</div></div>
-          <div class="stat"><div class="sv">6</div><div class="sl">API Endpoints</div></div>
-          <div class="stat"><div class="sv">3</div><div class="sl">Systems</div></div>
-        </div>
-        <div class="modal-links">
-          <a href="https://github.com/MannJanodia3404" class="mlink" target="_blank" data-t="lnk-gh">GitHub Profile &rarr;</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- PROJECT 6 (COMING SOON) -->
-    <div id="m-p6" class="modal-content">
-      <div class="modal-head">
-        <div><h2>More Projects Coming Soon</h2><div class="badge">In Development</div></div>
-        <button class="close-btn" onclick="closeModal()">&#10005;</button>
-      </div>
-      <div class="modal-body">
-        <h4>Overview</h4>
-        <p>This slot is reserved for upcoming projects currently in development. Visit my GitHub profile to see the latest work in progress.</p>
+        <ul><li data-t="niryo-li1"><strong>Three-layer architecture:</strong> Hardware (NED2 + TurtleBot4 + ESP32), Software (ROS2 + PyNiryo + Flask), Integration (HTTP REST API + threading).</li><li data-t="niryo-li2"><strong>Flask REST API with 6 endpoints:</strong> /start_niryo, /rfid, /niryo_done, /status, /emergency_stop, /reset.</li><li data-t="niryo-li3"><strong>Event-driven RFID sync:</strong> threading.Event() blocks Niryo at scanner until ESP32 sends tag UID via WiFi HTTP GET.</li><li data-t="niryo-li4"><strong>4-bin Cartesian sorting</strong> at SLOW_SPEED (20%) for safe tube insertion with joint-space waypoints.</li><li data-t="niryo-li5"><strong>ESP32 + PN532 RFID:</strong> I2C on GPIO21/22, MIFARE ISO14443A, under 5cm range.</li><li data-t="niryo-li6"><strong>TurtleBot4 coordinator:</strong> navigate, dock, trigger Niryo, poll status, undock, repeat.</li></ul>
+        <div class="stats-row"><div class="stat"><div class="sv">4</div><div class="sl">Tubes/Cycle</div></div><div class="stat"><div class="sv">6</div><div class="sl">API Endpoints</div></div><div class="stat"><div class="sv">3</div><div class="sl">Systems</div></div></div>
         <div class="modal-links"><a href="https://github.com/MannJanodia3404" class="mlink" target="_blank">GitHub Profile &rarr;</a></div>
+      </div><div class="mmp"><div class="mmp-hd">System Demo</div><div class="mmp-track" id="mmpd66be" data-cur="0"><div class="mmp-inner"><div class="mmp-slide"><img src="images/niryo1.jpg" alt="Niryo NED2 System" onerror="this.style.display='none'"><div class="mmp-cap">Niryo NED2 System</div></div></div></div><div class="mmp-nav"><button class="mmp-dot on" onclick="mmpGo('mmpd66be',0)"></button></div></div></div>
+    </div>
+
+    <div id="m-p6" class="modal-content">
+      <div class="modal-head"><div><h2>More Projects Coming Soon</h2><div class="badge">In Development</div></div><button class="close-btn" onclick="closeModal()">&#10005;</button></div>
+      <div class="modal-body"><h4>Overview</h4><p>This slot is reserved for upcoming projects currently in development. Visit my GitHub profile to see the latest work in progress.</p><div class="modal-links"><a href="https://github.com/MannJanodia3404" class="mlink" target="_blank">GitHub Profile &rarr;</a></div></div>
+    </div>
+
+    
+    <div id="m-mjolnir" class="modal-content">
+      <div class="modal-head"><div><h2>Mjolnir CAD Design</h2><div class="badge">Mechanical Design &middot; Fusion 360</div></div><button class="close-btn" onclick="closeModal()">&#10005;</button></div>
+      <div class="m2c"><div class="modal-body">
+        <h4 data-t="m-overview">Overview</h4><p data-t="m-mjol-ov">Fully detailed 3D CAD replica of Thor's Mjolnir, designed in Fusion 360. All components , handle, head, cap, and strap , are modelled as separate bodies with precise geometry and surface quality optimised for FDM 3D printing.</p>
+        <h4 data-t="m-key-details">Key Details</h4><ul><li data-t="mjol-li1">Full parametric model with all dimensions specified</li><li data-t="mjol-li2">Handle, head, cap, and strap modelled as separate bodies</li><li data-t="mjol-li3">Surface quality optimised for FDM 3D printing</li></ul>
+        <div class="modal-links"><a href="https://github.com/MannJanodia3404/Mj-lnir_Cad" class="mlink" target="_blank">GitHub &rarr;</a></div>
+      </div><div class="mmp"><div class="mmp-hd">Renders and Photos</div><div class="mmp-track" id="mmp0a892" data-cur="0"><div class="mmp-inner"><div class="mmp-slide"><img src="https://raw.githubusercontent.com/MannJanodia3404/Mj-lnir_Cad/main/images/mjolnir1.jpg" alt="Render 1" onerror="this.style.display='none'"><div class="mmp-cap">Render 1</div></div><div class="mmp-slide"><img src="https://raw.githubusercontent.com/MannJanodia3404/Mj-lnir_Cad/main/images/mjolnir2.jpg" alt="Render 2" onerror="this.style.display='none'"><div class="mmp-cap">Render 2</div></div></div><button class="mmp-arr mmp-al" onclick="mmpStep('mmp0a892',-1)">&#8249;</button><button class="mmp-arr mmp-ar" onclick="mmpStep('mmp0a892',1)">&#8250;</button></div><div class="mmp-nav"><button class="mmp-dot on" onclick="mmpGo('mmp0a892',0)"></button><button class="mmp-dot" onclick="mmpGo('mmp0a892',1)"></button></div></div></div>
+    </div>
+
+    <div id="m-arm" class="modal-content">
+      <div class="modal-head"><div><h2>Robotic Arm CAD Design</h2><div class="badge">Mechanical Design &middot; Robotics</div></div><button class="close-btn" onclick="closeModal()">&#10005;</button></div>
+      <div class="m2c"><div class="modal-body">
+        <h4 data-t="m-overview">Overview</h4><p data-t="m-arm-ov">Multi-DOF robotic arm designed from scratch in Fusion 360. Full assembly with per-joint sub-assemblies, link geometry, and clearance tolerances engineered for smooth servo-driven actuation.</p>
+        <h4 data-t="m-key-details">Key Details</h4><ul><li data-t="arm-li1">Full assembly with sub-assemblies for each joint</li><li data-t="arm-li2">Clearance tolerances for smooth servo rotation</li><li data-t="arm-li3">Modular design, joints can be replaced individually</li></ul>
+        <div class="modal-links"><a href="https://github.com/MannJanodia3404/Robotic-Arm" class="mlink" target="_blank">GitHub &rarr;</a></div>
+      </div><div class="mmp"><div class="mmp-hd">Renders and Photos</div><div class="mmp-track" id="mmp721dd" data-cur="0"><div class="mmp-inner"><div class="mmp-slide"><img src="https://raw.githubusercontent.com/MannJanodia3404/Robotic-Arm/main/images/arm1.jpg" alt="Render 1" onerror="this.style.display='none'"><div class="mmp-cap">Render 1</div></div><div class="mmp-slide"><img src="https://raw.githubusercontent.com/MannJanodia3404/Robotic-Arm/main/images/arm2.jpg" alt="Render 2" onerror="this.style.display='none'"><div class="mmp-cap">Render 2</div></div></div><button class="mmp-arr mmp-al" onclick="mmpStep('mmp721dd',-1)">&#8249;</button><button class="mmp-arr mmp-ar" onclick="mmpStep('mmp721dd',1)">&#8250;</button></div><div class="mmp-nav"><button class="mmp-dot on" onclick="mmpGo('mmp721dd',0)"></button><button class="mmp-dot" onclick="mmpGo('mmp721dd',1)"></button></div></div></div>
+    </div>
+
+    <div id="m-lidar" class="modal-content">
+      <div class="modal-head"><div><h2>4-Wheel LiDAR Robot CAD</h2><div class="badge">Mechanical Design &middot; Robotics</div></div><button class="close-btn" onclick="closeModal()">&#10005;</button></div>
+      <div class="m2c"><div class="modal-body">
+        <h4 data-t="m-overview">Overview</h4><p data-t="m-lidar-ov">Full chassis CAD for a 4-wheeled differential drive robot designed in Fusion 360. Integrated LiDAR mounting plate, sensor housing, and dedicated electronics bay for RPi 4 and motor driver.</p>
+        <h4 data-t="m-key-details">Key Details</h4><ul><li data-t="lidar-li1">4-wheel differential drive chassis with motor mounts</li><li data-t="lidar-li2">Integrated LiDAR mounting plate with cable management</li><li data-t="lidar-li3">Electronics bay with RPi and motor driver mounting points</li><li data-t="lidar-li4">Designed for FDM printing and laser-cut base plate</li></ul>
+        <div class="modal-links"><a href="https://github.com/MannJanodia3404/4-Wheel-LiDAR-Robot" class="mlink" target="_blank">GitHub &rarr;</a></div>
+      </div><div class="mmp"><div class="mmp-hd">Renders and Photos</div><div class="mmp-track" id="mmp1b414" data-cur="0"><div class="mmp-inner"><div class="mmp-slide"><img src="https://raw.githubusercontent.com/MannJanodia3404/4-Wheel-LiDAR-Robot/main/images/lidar1.jpg" alt="Render 1" onerror="this.style.display='none'"><div class="mmp-cap">Render 1</div></div><div class="mmp-slide"><img src="https://raw.githubusercontent.com/MannJanodia3404/4-Wheel-LiDAR-Robot/main/images/lidar2.jpg" alt="Render 2" onerror="this.style.display='none'"><div class="mmp-cap">Render 2</div></div></div><button class="mmp-arr mmp-al" onclick="mmpStep('mmp1b414',-1)">&#8249;</button><button class="mmp-arr mmp-ar" onclick="mmpStep('mmp1b414',1)">&#8250;</button></div><div class="mmp-nav"><button class="mmp-dot on" onclick="mmpGo('mmp1b414',0)"></button><button class="mmp-dot" onclick="mmpGo('mmp1b414',1)"></button></div></div></div>
+    </div>
+
+    
+    <div id="m-sk1" class="modal-content"><div class="modal-head"><div><h2 data-t="sk1-cat">Languages</h2><div class="badge">Programming</div></div><button class="close-btn" onclick="closeModal()">&#10005;</button></div><div class="modal-body"><h4>Skills &amp; Tools</h4><div class="mlc"><div class="mlci"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" style="" alt="">Python</div><div class="mlci"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" style="" alt="">C++</div><div class="mlci"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" style="" alt="">JavaScript</div><div class="mlci"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" style="filter:invert(1) brightness(.85);" alt="">Bash</div><div class="mlci"><div class="mlcfb" style="background:rgba(249,115,22,.18);color:#f97316">YML</div>YAML</div><div class="mlci"><div class="mlcfb" style="background:rgba(139,92,246,.18);color:#8b5cf6">XML</div>XML/URDF</div><div class="mlci"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" style="" alt="">Git</div><div class="mlci"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" style="filter:invert(1) brightness(.85);" alt="">GitHub</div></div><h4>Context</h4><p data-t="sk1-desc">Python primary for robotics. C++ for performance-critical nodes. Bash for system scripting.</p></div></div>
+    <div id="m-sk2" class="modal-content"><div class="modal-head"><div><h2 data-t="sk2-cat">Robotics &amp; ROS2</h2><div class="badge">Robotics Stack</div></div><button class="close-btn" onclick="closeModal()">&#10005;</button></div><div class="modal-body"><h4>Skills &amp; Tools</h4><div class="mlc"><div class="mlci"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ros/ros-original.svg" style="background:#fff;border-radius:3px;padding:1px;" alt="">ROS2 Jazzy</div><div class="mlci"><div class="mlcfb" style="background:rgba(6,182,212,.18);color:#06b6d4">N2</div>Nav2</div><div class="mlci"><div class="mlcfb" style="background:rgba(139,92,246,.18);color:#8b5cf6">SLM</div>SLAM Toolbox</div><div class="mlci"><div class="mlcfb" style="background:rgba(239,68,68,.18);color:#ef4444">NR</div>PyNiryo</div><div class="mlci"><div class="mlcfb" style="background:rgba(245,158,11,.18);color:#f59e0b">MV2</div>MoveIt2</div><div class="mlci"><div class="mlcfb" style="background:rgba(52,211,153,.18);color:#34d399">ARU</div>ArUco</div><div class="mlci"><div class="mlcfb" style="background:rgba(255,99,71,.18);color:#ff6347">URDF</div>URDF/Xacro</div><div class="mlci"><div class="mlcfb" style="background:rgba(0,217,255,.18);color:#00d9ff">RV2</div>RViz2</div><div class="mlci"><div class="mlcfb" style="background:rgba(52,211,153,.18);color:#34d399">r2c</div>ros2_control</div></div><h4>Context</h4><p data-t="sk2-desc">Full ROS2 Jazzy systems on Ubuntu 24.04: Nav2, SLAM, MoveIt2 for real robot deployment.</p></div></div>
+    <div id="m-sk3" class="modal-content"><div class="modal-head"><div><h2 data-t="sk3-cat">AI &amp; Computer Vision</h2><div class="badge">ML / Vision</div></div><button class="close-btn" onclick="closeModal()">&#10005;</button></div><div class="modal-body"><h4>Skills &amp; Tools</h4><div class="mlc"><div class="mlci"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" style="" alt="">TensorFlow</div><div class="mlci"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/keras/keras-original.svg" style="" alt="">Keras</div><div class="mlci"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg" style="" alt="">OpenCV</div><div class="mlci"><div class="mlcfb" style="background:rgba(6,182,212,.18);color:#06b6d4">MP</div>MediaPipe</div><div class="mlci"><div class="mlcfb" style="background:rgba(239,68,68,.18);color:#ef4444">YL8</div>YOLOv8 NCNN</div><div class="mlci"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" style="" alt="">NumPy NN</div><div class="mlci"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg" style="" alt="">scikit-learn</div><div class="mlci"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" style="" alt="">Pandas</div><div class="mlci"><div class="mlcfb" style="background:rgba(52,211,153,.18);color:#34d399">ARU</div>ArUco</div></div><h4>Context</h4><p data-t="sk3-desc">Custom 5-layer NNs from scratch. MediaPipe HandLandmarker. OpenCV ArUco pose estimation. YOLOv8 NCNN for RPi.</p></div></div>
+    <div id="m-sk4" class="modal-content"><div class="modal-head"><div><h2 data-t="sk4-cat">Hardware</h2><div class="badge">Embedded / Platforms</div></div><button class="close-btn" onclick="closeModal()">&#10005;</button></div><div class="modal-body"><h4>Skills &amp; Tools</h4><div class="mlc"><div class="mlci"><div class="mlcfb" style="background:rgba(239,68,68,.18);color:#ef4444">NR</div>Niryo NED2 (6-DOF)</div><div class="mlci"><div class="mlcfb" style="background:rgba(34,197,94,.18);color:#22c55e">TB4</div>TurtleBot4</div><div class="mlci"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg" style="" alt="">Raspberry Pi 4</div><div class="mlci"><div class="mlcfb" style="background:rgba(245,158,11,.18);color:#f59e0b">E32</div>ESP32</div><div class="mlci"><div class="mlcfb" style="background:rgba(249,115,22,.18);color:#f97316">RF</div>PN532 RFID (I2C)</div><div class="mlci"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg" style="" alt="">Arduino Uno</div><div class="mlci"><div class="mlcfb" style="background:rgba(96,165,250,.18);color:#60a5fa">DRV</div>DRV8833</div><div class="mlci"><div class="mlcfb" style="background:rgba(0,217,255,.18);color:#00d9ff">SRV</div>MG996R Servos</div><div class="mlci"><div class="mlcfb" style="background:rgba(52,211,153,.18);color:#34d399">US</div>HC-SR04</div><div class="mlci"><div class="mlcfb" style="background:rgba(139,92,246,.18);color:#8b5cf6">LDR</div>LiDAR (RPLIDAR)</div></div><h4>Context</h4><p data-t="sk4-desc">Hands-on with real robots. Debugged I2C, WiFi, TCP, serial comm. Solved mechanical offset issues.</p></div></div>
+    <div id="m-sk5" class="modal-content"><div class="modal-head"><div><h2 data-t="sk5-cat">Tools &amp; Platforms</h2><div class="badge">DevOps / Simulation</div></div><button class="close-btn" onclick="closeModal()">&#10005;</button></div><div class="modal-body"><h4>Skills &amp; Tools</h4><div class="mlc"><div class="mlci"><div class="mlcfb" style="background:rgba(249,115,22,.18);color:#f97316">WB</div>Webots</div><div class="mlci"><div class="mlcfb" style="background:rgba(34,197,94,.18);color:#22c55e">GZ</div>Gazebo</div><div class="mlci"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" style="filter:invert(1) brightness(.85);" alt="">Flask</div><div class="mlci"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" style="filter:invert(1) brightness(.85);" alt="">Git/GitHub</div><div class="mlci"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" style="" alt="">Docker</div><div class="mlci"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ubuntu/ubuntu-original.svg" style="" alt="">Ubuntu 24.04</div><div class="mlci"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" style="" alt="">VS Code</div><div class="mlci"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg" style="" alt="">Arduino IDE</div><div class="mlci"><div class="mlcfb" style="background:rgba(0,217,255,.18);color:#00d9ff">PWM</div>pigpio</div><div class="mlci"><div class="mlcfb" style="background:rgba(249,115,22,.18);color:#f97316">F3D</div>Fusion 360</div></div><h4>Context</h4><p data-t="sk5-desc">Webots and Gazebo for simulation. Flask REST APIs for multi-system coordination. All on GitHub.</p></div></div>
+    <div id="m-sk6" class="modal-content"><div class="modal-head"><div><h2 data-t="sk6-cat">Engineering</h2><div class="badge">Academic / Standards</div></div><button class="close-btn" onclick="closeModal()">&#10005;</button></div><div class="modal-body"><h4>Skills &amp; Tools</h4><div class="mlc"><div class="mlci"><div class="mlcfb" style="background:rgba(245,158,11,.18);color:#f59e0b">THM</div>Thermodynamics</div><div class="mlci"><div class="mlcfb" style="background:rgba(6,182,212,.18);color:#06b6d4">EXG</div>Exergy Analysis</div><div class="mlci"><div class="mlcfb" style="background:rgba(34,197,94,.18);color:#22c55e">LCA</div>Life Cycle Assessment</div><div class="mlci"><div class="mlcfb" style="background:rgba(239,68,68,.18);color:#ef4444">ISO</div>ISO 31000 (Risk)</div><div class="mlci"><div class="mlcfb" style="background:rgba(139,92,246,.18);color:#8b5cf6">ISO</div>ISO 10218 (Robot Safety)</div><div class="mlci"><div class="mlcfb" style="background:rgba(0,217,255,.18);color:#00d9ff">UK</div>UK-SPEC</div></div><h4>Context</h4><p data-t="sk6-desc">Applied thermodynamics, exergy analysis. Familiar with ISO 31000 risk and ISO 10218 robot safety.</p></div></div>
+
+  </div>
+</div>
+
+<div id="resume-overlay" onclick="handleResumeOverlayClick(event)">
+  <div class="resume-modal-box" onclick="event.stopPropagation()">
+    <div class="resume-modal-top">
+      <span class="resume-modal-title">Mann Janodia: Resume</span>
+      <div class="resume-modal-actions">
+        <a href="resume.pdf" target="_blank" rel="noopener">&#8599; New Tab</a>
+        <a href="resume.pdf" download>&#8595; Download</a>
+        <button class="resume-close-btn" onclick="closeResume()">&#10005;</button>
+      </div>
+    </div>
+    <iframe id="resume-frame" src="" title="Resume"></iframe>
+    <div class="resume-fallback-msg" id="resume-fallback">
+      Your browser cannot display this PDF inline.
+      <a href="resume.pdf" download style="color:#00d9ff;margin-left:.5rem">Download it here</a>
+    </div>
+  </div>
+</div>
+
+<div id="jv-btn" onclick="jvToggle()" title="JARVIS">
+  <canvas id="jv-orb" width="76" height="76"></canvas>
+  <div id="jv-lbl">J.A.R.V.I.S</div>
+</div>
+
+<div id="jv-panel">
+
+  
+  <div class="jvtop">
+    <div class="jvtop-brand">
+      <div class="jvtop-name">J.A.R.V.I.S</div>
+      <div class="jvtop-sub">STARK INDUSTRIES , SYNTHETIC INTELLIGENCE</div>
+    </div>
+    <div class="jvtop-stats">
+      <div class="jvtop-stat"><div class="jvts-v">08</div><div class="jvts-l">PROJECTS</div></div>
+      <div class="jvtop-stat"><div class="jvts-v">94.2<span style="font-size:.6em">%</span></div><div class="jvts-l">ACCURACY</div></div>
+      <div class="jvtop-stat"><div class="jvts-v">03</div><div class="jvts-l">CAD FILES</div></div>
+      <div class="jvtop-stat"><div class="jvts-v">&lt;50<span style="font-size:.6em">ms</span></div><div class="jvts-l">LATENCY</div></div>
+    </div>
+    <div class="jvtop-r">
+      <div class="jvlive"><div class="jvdot"></div><span class="jvdot-txt">ONLINE</span></div>
+      <span class="jvclock-top" id="jv-clock">13:45</span>
+      <button class="jvx" onclick="jvToggle()">&#10005;</button>
+    </div>
+  </div>
+
+  
+  <div class="jv-body">
+
+    
+    <div class="jv-left">
+      <div class="jv-arc-row">
+        <div class="jvarc"><div class="jvarc-c"></div></div>
+        <div class="jv-arc-label">
+          <div class="jv-arc-title">MANN JANODIA // PORTFOLIO AI SYSTEM</div>
+          <div class="jv-arc-sub" id="jv-sys-mode">STANDBY MODE</div>
+        </div>
+      </div>
+      <div class="jvout" id="jv-msgs">
+        <div class="jvtyp" id="jv-typing">PROCESSING</div>
+      </div>
+      <div class="jvchips" id="jv-chips"></div>
+      <div class="jvinp-row">
+        <span class="jvpfx">&gt;_</span>
+        <input class="jvinp" id="jv-in" placeholder="SPEAK YOUR QUERY, SIR..." autocomplete="off"/>
+        <button class="jvsend" onclick="jvSend()">TRANSMIT</button>
       </div>
     </div>
 
-    <div id="m-sk1" class="modal-content">
-      <div class="modal-head"><div><h2 data-t="sk1-cat">Languages</h2><div class="badge">Programming</div></div><button class="close-btn" onclick="closeModal()">&#10005;</button></div>
-      <div class="modal-body"><h4 data-t="m-skills-used">Skills &amp; Tools</h4><div class="modal-chips"><span class="modal-chip">Python (Advanced)</span><span class="modal-chip">C++ (Intermediate)</span><span class="modal-chip">JavaScript</span><span class="modal-chip">Bash/Shell</span><span class="modal-chip">YAML</span><span class="modal-chip">XML (URDF)</span></div><h4 data-t="m-sk-context">Context</h4><p data-t="sk1-desc">Python primary for robotics. C++ for performance-critical nodes. Bash for system scripting.</p></div>
-    </div>
-
-    <div id="m-sk2" class="modal-content">
-      <div class="modal-head"><div><h2 data-t="sk2-cat">Robotics &amp; ROS2</h2><div class="badge">Robotics Stack</div></div><button class="close-btn" onclick="closeModal()">&#10005;</button></div>
-      <div class="modal-body"><h4 data-t="m-skills-used">Skills &amp; Tools</h4><div class="modal-chips"><span class="modal-chip">ROS2 Jazzy</span><span class="modal-chip">Nav2</span><span class="modal-chip">SLAM Toolbox</span><span class="modal-chip">PyNiryo</span><span class="modal-chip">MoveIt2</span><span class="modal-chip">ArUco</span><span class="modal-chip">URDF/Xacro</span><span class="modal-chip">RViz2</span><span class="modal-chip">ros2_control</span></div><h4 data-t="m-sk-context">Context</h4><p data-t="sk2-desc">Full ROS2 Jazzy systems on Ubuntu 24.04 — Nav2, SLAM, MoveIt2 for real robot deployment.</p></div>
-    </div>
-
-    <div id="m-sk3" class="modal-content">
-      <div class="modal-head"><div><h2 data-t="sk3-cat">AI &amp; Computer Vision</h2><div class="badge">ML / Vision</div></div><button class="close-btn" onclick="closeModal()">&#10005;</button></div>
-      <div class="modal-body"><h4 data-t="m-skills-used">Skills &amp; Tools</h4><div class="modal-chips"><span class="modal-chip">TensorFlow/Keras</span><span class="modal-chip">MediaPipe Tasks API</span><span class="modal-chip">OpenCV</span><span class="modal-chip">YOLOv8 (NCNN)</span><span class="modal-chip">NumPy NN from scratch</span><span class="modal-chip">scikit-learn</span><span class="modal-chip">Pandas</span></div><h4 data-t="m-sk-context">Context</h4><p data-t="sk3-desc">Custom 5-layer NNs from scratch. MediaPipe HandLandmarker. OpenCV ArUco pose estimation. YOLOv8 NCNN for RPi.</p></div>
-    </div>
-
-    <div id="m-sk4" class="modal-content">
-      <div class="modal-head"><div><h2 data-t="sk4-cat">Hardware</h2><div class="badge">Embedded / Platforms</div></div><button class="close-btn" onclick="closeModal()">&#10005;</button></div>
-      <div class="modal-body"><h4 data-t="m-skills-used">Skills &amp; Tools</h4><div class="modal-chips"><span class="modal-chip">Niryo NED2 (6-DOF)</span><span class="modal-chip">TurtleBot4</span><span class="modal-chip">Raspberry Pi 4</span><span class="modal-chip">ESP32</span><span class="modal-chip">PN532 RFID (I2C)</span><span class="modal-chip">Arduino Uno (&times;2)</span><span class="modal-chip">DRV8833</span><span class="modal-chip">MG996R Servos</span><span class="modal-chip">HC-SR04</span><span class="modal-chip">LiDAR (RPLIDAR)</span></div><h4 data-t="m-sk-context">Context</h4><p data-t="sk4-desc">Hands-on with real robots. Debugged I2C, WiFi, TCP, serial comm. Solved mechanical offset issues.</p></div>
-    </div>
-
-    <div id="m-sk5" class="modal-content">
-      <div class="modal-head"><div><h2 data-t="sk5-cat">Tools &amp; Platforms</h2><div class="badge">DevOps / Simulation</div></div><button class="close-btn" onclick="closeModal()">&#10005;</button></div>
-      <div class="modal-body"><h4 data-t="m-skills-used">Skills &amp; Tools</h4><div class="modal-chips"><span class="modal-chip">Webots</span><span class="modal-chip">Gazebo</span><span class="modal-chip">Flask (REST APIs)</span><span class="modal-chip">Git/GitHub</span><span class="modal-chip">Docker</span><span class="modal-chip">Ubuntu 24.04</span><span class="modal-chip">VS Code</span><span class="modal-chip">Arduino IDE</span><span class="modal-chip">pigpio</span></div><h4 data-t="m-sk-context">Context</h4><p data-t="sk5-desc">Webots and Gazebo for simulation. Flask REST APIs for multi-system coordination. All on GitHub.</p></div>
-    </div>
-
-    <div id="m-sk6" class="modal-content">
-      <div class="modal-head"><div><h2 data-t="sk6-cat">Engineering</h2><div class="badge">Academic / Standards</div></div><button class="close-btn" onclick="closeModal()">&#10005;</button></div>
-      <div class="modal-body"><h4 data-t="m-skills-used">Skills &amp; Tools</h4><div class="modal-chips"><span class="modal-chip">Thermodynamics</span><span class="modal-chip">Exergy Analysis</span><span class="modal-chip">Life Cycle Assessment</span><span class="modal-chip">ISO 31000 (Risk)</span><span class="modal-chip">ISO 10218 (Robot Safety)</span><span class="modal-chip">UK-SPEC</span></div><h4 data-t="m-sk-context">Context</h4><p data-t="sk6-desc">Applied thermodynamics, exergy analysis. Familiar with ISO 31000 risk and ISO 10218 robot safety.</p></div>
+    
+    <div class="jv-right">
+      <div class="jv-rblock">
+        <div class="jv-rlabel">QUERY SHORTCUTS</div>
+        <div class="jv-shortcuts" id="jv-shortcuts">
+          <button class="jv-sc" onclick="jvAsk('Best project')">Best project</button>
+          <button class="jv-sc" onclick="jvAsk('CAD designs')">CAD designs</button>
+          <button class="jv-sc" onclick="jvAsk('Skills')">Skills</button>
+          <button class="jv-sc" onclick="jvAsk('Contact')">Contact</button>
+        </div>
+      </div>
+      <div class="jv-rblock">
+        <div class="jv-rlabel">SYSTEM VITALS</div>
+        <div class="jv-vital">
+          <div class="jv-vital-row"><span class="jv-vital-name">POWER</span><span class="jv-vital-val">88%</span></div>
+          <div class="jv-vbar"><div class="jv-vfill" style="width:88%"></div></div>
+        </div>
+        <div class="jv-vital">
+          <div class="jv-vital-row"><span class="jv-vital-name">UPLINK</span><span class="jv-vital-val">86%</span></div>
+          <div class="jv-vbar"><div class="jv-vfill" style="width:86%"></div></div>
+        </div>
+        <div class="jv-vital">
+          <div class="jv-vital-row"><span class="jv-vital-name">THREAT</span><span class="jv-vital-val none">NONE</span></div>
+          <div class="jv-vbar"><div class="jv-vfill" style="width:3%;background:#00ff88"></div></div>
+        </div>
+      </div>
+      <div class="jv-rblock">
+        <div class="jv-rlabel">SYSTEM LOG</div>
+        <div class="jv-log" id="jv-syslog">
+          <div class="jv-log-line"><b>STARK IND. v2.0.4</b></div>
+          <div class="jv-log-line"><b>ENG:</b> MANN JANODIA</div>
+          <div class="jv-log-line hi"><b>STATUS:</b> NOMINAL</div>
+        </div>
+      </div>
     </div>
 
   </div>
+
+  
+  <div class="jvfoot">
+    <span id="jv-foot-l">MANN JANODIA PORTFOLIO SYSTEM</span>
+    <span id="jv-foot-r">ACTIVE</span>
+  </div>
+
 </div>
 
 <script src="js/background.js"></script>
 <script src="js/modal.js"></script>
 <script src="js/showcase.js"></script>
 <script src="js/main.js?v=2"></script>
+
+<script>
+
+function goSlide(id, idx){
+  const wrap = document.getElementById(id);
+  if(!wrap) return;
+  const items = wrap.querySelectorAll('img, video');
+  const dots  = wrap.querySelectorAll('.pc-img-dot');
+  items.forEach((el,i)=>{
+    const on = i===idx;
+    el.classList.toggle('active', on);
+    if(el.tagName==='VIDEO'){ try{ on ? el.play() : el.pause(); }catch(e){} }
+  });
+  dots.forEach((d,i)=> d.classList.toggle('on', i===idx));
+}
+function stepSlide(id, dir){
+  const wrap = document.getElementById(id);
+  if(!wrap) return;
+  const items = wrap.querySelectorAll('img, video');
+  let cur = 0;
+  items.forEach((el,i)=>{ if(el.classList.contains('active')) cur=i; });
+  goSlide(id, (cur+dir+items.length)%items.length);
+}
+
+const CAD_MODELS = [
+  {
+    name: "Mjolnir: Thor's Hammer",
+    desc: "Fully detailed CAD replica · Fusion 360",
+    gh:   "https://github.com/MannJanodia3404/Mj-lnir_Cad",
+    stl:  "https://cdn.jsdelivr.net/gh/MannJanodia3404/Mj-lnir_Cad@38efe62560276587cf78e1dc17d6570c83e0353f/mjolnir.stl",
+    col:  0xc8a000,
+    rx:   -Math.PI / 2   
+  },
+  {
+    name: "Robotic Arm Assembly",
+    desc: "Multi-DOF servo-driven arm · Fusion 360",
+    gh:   "https://github.com/MannJanodia3404/Robotic-Arm",
+    stl:  "https://cdn.jsdelivr.net/gh/MannJanodia3404/Robotic-Arm@472615e60fd9c0f4bc6596b88b915269475d0edc/Robotics_arm_assembly.stl",
+    col:  0x2255aa,
+    rx:   -Math.PI / 2   
+  },
+  {
+    name: "4-Wheel LiDAR Robot",
+    desc: "Differential drive chassis · Fusion 360",
+    gh:   "https://github.com/MannJanodia3404/4-Wheel-LiDAR-Robot",
+    stl:  "https://cdn.jsdelivr.net/gh/MannJanodia3404/4-Wheel-LiDAR-Robot@40425fa75c3249262ac00421fe9fac7ea9a255a2/4-wheel%20robot.stl",
+    col:  0x119955,
+    rx:   -Math.PI / 2   
+  },
+];
+
+let cS, cCam, cR, cMesh, cWire=false;
+let cTh=0.7, cPh=0.85, cRadius=6, cPx=0, cPy=0;
+let cDrag=false, cRight=false, cLx=0, cLy=0;
+let cCurrentIdx=0;
+
+/* centre + scale geometry directly so mesh sits at world origin */
+
+function cadLiftMesh(mesh){
+  const box = new THREE.Box3().setFromObject(mesh);
+  mesh.position.y += -box.min.y;
+}
+
+function cadFitMesh(mesh, target){
+  target = target || 4;
+  const geo = mesh.geometry;
+
+  
+  geo.computeBoundingBox();
+  const bb   = geo.boundingBox;
+  const size = new THREE.Vector3();
+  bb.getSize(size);
+
+  
+  const maxDim = Math.max(size.x, size.y, size.z);
+  if(maxDim > 0){
+    const s = target / maxDim;
+    geo.scale(s, s, s);
+    geo.computeBoundingBox();
+  }
+
+  /* 3. Centre geometry in X and Z only , leave Y alone */
+  const bb2 = geo.boundingBox;
+  const cx  = (bb2.max.x + bb2.min.x) / 2;
+  const cz  = (bb2.max.z + bb2.min.z) / 2;
+  geo.translate(-cx, 0, -cz);
+
+  
+  mesh.position.set(0, 0, 0);
+  mesh.rotation.set(0, 0, 0);
+  mesh.scale.set(1, 1, 1);
+
+  
+  cadLiftMesh(mesh);
+
+  
+  const worldBox = new THREE.Box3().setFromObject(mesh);
+  const wSize    = new THREE.Vector3(); worldBox.getSize(wSize);
+  cRadius = target * 1.9;
+  cPh     = 1.05;
+  cPy     = wSize.y * 0.4;
+}
+
+function cadShowLoading(on){
+  const hint = document.querySelector('.cad-hint');
+  if(hint) hint.textContent = on
+    ? '⏳ Loading STL from GitHub...'
+    : '🖱 Drag to rotate · Scroll to zoom · Right-drag to pan';
+}
+
+function buildCadModel(idx){
+  if(!cS) return;
+  cCurrentIdx = idx;
+
+  
+  if(cMesh){ cS.remove(cMesh); cMesh=null; }
+  cWire=false;
+  document.getElementById('wire-btn').classList.remove('active');
+  document.querySelectorAll('.cad-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+
+  const m = CAD_MODELS[idx];
+  document.getElementById('cad-name').textContent = m.name;
+  document.getElementById('cad-desc').textContent = m.desc;
+  document.getElementById('cad-gh').href = m.gh;
+
+  cTh=0.7; cPh=1.1; cRadius=7.2; cPx=0; cPy=0;
+  cadShowLoading(true);
+
+  
+  const loader = new THREE.STLLoader();
+  loader.load(
+    m.stl,
+    function(geometry){
+      cadShowLoading(false);
+      geometry.computeVertexNormals();
+      const mat = new THREE.MeshStandardMaterial({
+        color: m.col,
+        metalness: 0.55,
+        roughness: 0.3,
+        side: THREE.DoubleSide
+      });
+      const mesh = new THREE.Mesh(geometry, mat);
+      
+      if(m.rx) geometry.rotateX(m.rx);
+      cadFitMesh(mesh);
+      cMesh = mesh;
+      cS.add(cMesh);
+    },
+    function(xhr){
+      /* progress , optional */
+    },
+    function(err){
+      cadShowLoading(false);
+      console.warn('STL load error:', err);
+      
+      const fbMat = new THREE.MeshStandardMaterial({color:m.col,wireframe:true});
+      const fb = new THREE.Mesh(new THREE.BoxGeometry(2,2,2), fbMat);
+      cMesh = fb; cS.add(cMesh);
+    }
+  );
+}
+
+/* Rotate 90 deg around Y , then re-lift so base stays on grid */
+function cadRotate(){
+  if(!cMesh) return;
+  
+  cMesh.geometry.rotateY(Math.PI / 2);
+  /* Re-centre X/Z after rotation */
+  cMesh.geometry.computeBoundingBox();
+  const bb2 = cMesh.geometry.boundingBox;
+  const cx  = (bb2.max.x + bb2.min.x) / 2;
+  const cz  = (bb2.max.z + bb2.min.z) / 2;
+  cMesh.geometry.translate(-cx, 0, -cz);
+  
+  cMesh.position.set(0, 0, 0);
+  cadLiftMesh(cMesh);
+}
+
+function cadReset(){
+  cTh=0.7; cPh=1.05; cPx=0; cPy=0;
+  if(cMesh){
+    const bb  = new THREE.Box3().setFromObject(cMesh);
+    const size= new THREE.Vector3(); bb.getSize(size);
+    cRadius = Math.max(size.x, size.y, size.z) * 1.9;
+    cPy     = size.y * 0.4;
+  } else {
+    cRadius = 7.2;
+  }
+}
+
+function cadWireToggle(){
+  cWire = !cWire;
+  document.getElementById('wire-btn').classList.toggle('active', cWire);
+  if(cMesh) cMesh.traverse(c=>{ if(c.isMesh && c.material) c.material.wireframe = cWire; });
+}
+
+(function initCAD(){
+  
+  function loadScript(src, cb){
+    const s = document.createElement('script');
+    s.src = src; s.onload = cb;
+    document.head.appendChild(s);
+  }
+
+  const THREE_CDN  = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+  /* STLLoader for r128 from jsDelivr */
+  const STL_CDN    = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js';
+
+  loadScript(THREE_CDN, function(){
+    loadScript(STL_CDN, function(){
+      const canvas = document.getElementById('cad-canvas');
+      const W = canvas.parentElement.clientWidth, H = 440;
+      canvas.width = W; canvas.height = H;
+
+      cS  = new THREE.Scene();
+      cS.background = new THREE.Color(0x030810);
+      cCam = new THREE.PerspectiveCamera(45, W/H, 0.01, 2000);
+      cR   = new THREE.WebGLRenderer({canvas, antialias:true});
+      cR.setSize(W, H);
+      cR.setPixelRatio(Math.min(devicePixelRatio, 2));
+      cR.shadowMap.enabled = true;
+
+      
+      cS.add(new THREE.AmbientLight(0x4466aa, 1.2));
+      const dl  = new THREE.DirectionalLight(0x00d9ff, 2.0); dl.position.set(5,8,6);  cS.add(dl);
+      const dl2 = new THREE.DirectionalLight(0xffffff, 0.6); dl2.position.set(-5,-4,-5); cS.add(dl2);
+      const dl3 = new THREE.DirectionalLight(0x0055ff, 0.4); dl3.position.set(0,10,0);  cS.add(dl3);
+      cS.add(new THREE.GridHelper(20, 30, 0x0d1520, 0x091018));
+
+      
+      document.getElementById('cad-tabs').innerHTML = CAD_MODELS.map((m,i)=>
+        `<button class="cad-tab${i===0?' active':''}" onclick="buildCadModel(${i})">${m.name}</button>`
+      ).join('');
+
+      buildCadModel(0);
+
+      
+      canvas.addEventListener('mousedown', e=>{
+        e.button===2 ? (cRight=true) : (cDrag=true);
+        cLx=e.clientX; cLy=e.clientY;
+      });
+      canvas.addEventListener('contextmenu', e=>e.preventDefault());
+      window.addEventListener('mouseup', ()=>{ cDrag=false; cRight=false; });
+      window.addEventListener('mousemove', e=>{
+        const dx=e.clientX-cLx, dy=e.clientY-cLy;
+        if(cDrag){  cTh-=dx*.005; cPh-=dy*.005; cPh=Math.max(.05,Math.min(Math.PI-.05,cPh)); }
+        if(cRight){ cPx+=dx*.006; cPy-=dy*.006; }
+        cLx=e.clientX; cLy=e.clientY;
+      });
+      /* zoom , prevent page scroll */
+      canvas.addEventListener('wheel', e=>{
+        e.preventDefault();
+        cRadius = Math.max(0.5, Math.min(50, cRadius + e.deltaY*0.02));
+      }, {passive:false});
+
+      
+      let tPrev=null, tDist=null;
+      canvas.addEventListener('touchstart', e=>{
+        if(e.touches.length===1){ cDrag=true; cLx=e.touches[0].clientX; cLy=e.touches[0].clientY; }
+        if(e.touches.length===2){ tDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY); }
+      },{passive:true});
+      window.addEventListener('touchend',  ()=>{ cDrag=false; tDist=null; },{passive:true});
+      window.addEventListener('touchmove', e=>{
+        if(e.touches.length===1 && cDrag){
+          const dx=e.touches[0].clientX-cLx, dy=e.touches[0].clientY-cLy;
+          cTh-=dx*.005; cPh-=dy*.005; cPh=Math.max(.05,Math.min(Math.PI-.05,cPh));
+          cLx=e.touches[0].clientX; cLy=e.touches[0].clientY;
+        }
+        if(e.touches.length===2 && tDist!==null){
+          const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+          cRadius=Math.max(0.5,Math.min(50,cRadius-(d-tDist)*0.05));
+          tDist=d;
+        }
+      },{passive:true});
+
+      
+      window.addEventListener('resize', ()=>{
+        const nW=canvas.parentElement.clientWidth;
+        canvas.width=nW; cR.setSize(nW,H);
+        cCam.aspect=nW/H; cCam.updateProjectionMatrix();
+      });
+
+      
+      (function anim(){
+        requestAnimationFrame(anim);
+        cCam.position.set(
+          cRadius*Math.sin(cPh)*Math.sin(cTh) + cPx,
+          cRadius*Math.cos(cPh)               + cPy,
+          cRadius*Math.sin(cPh)*Math.cos(cTh)
+        );
+        cCam.lookAt(cPx, cPy, 0);
+        cR.render(cS, cCam);
+      })();
+    });
+  });
+})();
+
+function openResume(){
+  const ov=document.getElementById('resume-overlay');
+  const fr=document.getElementById('resume-frame');
+  if(!fr.src || fr.src==='about:blank' || !fr.src.includes('resume.pdf')){
+    fr.src='resume.pdf';
+    fr.onload=function(){
+      /* if load fails (file not found), show fallback */
+      try{
+        if(fr.contentDocument && fr.contentDocument.body){
+          const t=fr.contentDocument.body.innerText||'';
+          if(t.includes('404')||t.includes('not found')) showResumeFallback();
+        }
+      }catch(e){}
+    };
+    fr.onerror=function(){ showResumeFallback(); };
+  }
+  ov.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeResume(){
+  document.getElementById('resume-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function handleResumeOverlayClick(e){
+  if(e.target===document.getElementById('resume-overlay')) closeResume();
+}
+function showResumeFallback(){
+  document.getElementById('resume-frame').style.display='none';
+  document.getElementById('resume-fallback').style.display='block';
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeResume(); });
+
+function mmpGo(id,idx){
+  const track=document.getElementById(id);if(!track)return;
+  const inner=track.querySelector('.mmp-inner');
+  const slides=track.querySelectorAll('.mmp-slide');
+  const nav=track.closest('.mmp');
+  const dots=nav?nav.querySelectorAll('.mmp-dot'):[];
+  if(!inner||!slides.length)return;
+  const n=slides.length;idx=((idx%n)+n)%n;
+  inner.style.transform='translateX(-'+idx*100+'%)';
+  dots.forEach((d,i)=>d.classList.toggle('on',i===idx));
+  slides.forEach((s,i)=>{const v=s.querySelector('video');if(v){i===idx?v.play().catch(()=>{}):v.pause();}});
+  track.dataset.cur=idx;
+}
+function mmpStep(id,dir){
+  const t=document.getElementById(id);if(!t)return;
+  mmpGo(id,parseInt(t.dataset.cur||0)+dir);
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.mmp-track').forEach(t=>{
+    let sx=0;
+    t.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;},{passive:true});
+    t.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40)mmpStep(t.id,dx<0?1:-1);},{passive:true});
+  });
+});
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const cc=document.getElementById('cad-canvas');
+  if(cc)cc.addEventListener('wheel',e=>{e.preventDefault();},{passive:false});
+});
+
+(function(){
+  const cv=document.getElementById('jv-orb');if(!cv)return;
+  const cx=cv.getContext('2d'),W=76,H=76,CX=38,CY=38,R=27;
+  let ry=0,bt=0;
+  const N=140,pts=[],gld=Math.PI*(3-Math.sqrt(5));
+  for(let i=0;i<N;i++){const y=1-(i/(N-1))*2,r2=Math.sqrt(1-y*y),t=gld*i;pts.push({x0:R*r2*Math.cos(t),y0:R*y,z0:R*r2*Math.sin(t)});}
+  const RINGS=[];
+  [[0,0],[Math.PI/2,0],[0,Math.PI/2],[Math.PI/4,Math.PI/4]].forEach(([tx,tz])=>{
+    const ring=[];for(let s=0;s<=60;s++){const a=2*Math.PI*s/60,x=R*Math.cos(a),y=R*Math.sin(a);const y1=y*Math.cos(tx),z1=y*Math.sin(tx),x2=x*Math.cos(tz)-z1*Math.sin(tz),z2=x*Math.sin(tz)+z1*Math.cos(tz);ring.push({x0:x2,y0:y1,z0:z2});}RINGS.push(ring);
+  });
+  function rot(px,py,pz){const x1=px*Math.cos(ry)+pz*Math.sin(ry),z1=-px*Math.sin(ry)+pz*Math.cos(ry),y2=py*Math.cos(.25)-z1*Math.sin(.25);return{x:x1,y:y2,z:py*Math.sin(.25)+z1*Math.cos(.25)};}
+  function proj(p){const f=190/(190+p.z+60);return{sx:CX+p.x*f,sy:CY-p.y*f,s:f,z:p.z};}
+  function draw(){
+    cx.clearRect(0,0,W,H);ry+=.022;bt+=.025;
+    const r=13+3*Math.sin(bt);
+    const halo=cx.createRadialGradient(CX,CY,0,CX,CY,r*2.8);
+    halo.addColorStop(0,`rgba(0,100,255,${.2+.07*Math.sin(bt)})`);halo.addColorStop(1,'rgba(0,0,0,0)');
+    cx.fillStyle=halo;cx.fillRect(0,0,W,H);
+    const cg=cx.createRadialGradient(CX,CY,0,CX,CY,r);
+    cg.addColorStop(0,'rgba(200,245,255,1)');cg.addColorStop(.15,'rgba(100,210,255,.97)');cg.addColorStop(.5,'rgba(20,110,255,.9)');cg.addColorStop(.85,'rgba(0,20,140,.3)');cg.addColorStop(1,'rgba(0,0,80,0)');
+    cx.beginPath();cx.arc(CX,CY,r,0,Math.PI*2);cx.fillStyle=cg;cx.fill();
+    cx.beginPath();cx.arc(CX,CY,4+1.2*Math.sin(bt*2),0,Math.PI*2);cx.fillStyle='rgba(255,255,255,.98)';cx.fill();
+    RINGS.forEach(ring=>{cx.beginPath();ring.forEach((pt,i)=>{const p=proj(rot(pt.x0,pt.y0,pt.z0));i===0?cx.moveTo(p.sx,p.sy):cx.lineTo(p.sx,p.sy);});cx.strokeStyle='rgba(0,200,255,.22)';cx.lineWidth=.6;cx.stroke();});
+    pts.map(pt=>{const r2=rot(pt.x0,pt.y0,pt.z0),p=proj(r2);return{...p,depth:(r2.z+R)/(2*R)};}).sort((a,b)=>a.z-b.z).forEach(p=>{const d=p.depth,sz=.5+1.5*d*p.s,al=.08+.85*d;cx.beginPath();cx.arc(p.sx,p.sy,sz,0,Math.PI*2);cx.fillStyle=`rgba(50,${Math.floor(140+90*d)},${Math.floor(210+45*d)},${al.toFixed(2)})`;cx.fill();});
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+let jvOpen=false;
+
+(function(){
+  const el=document.getElementById('jv-clock');
+  function t(){if(el)el.textContent=new Date().toTimeString().slice(0,5);}
+  t();setInterval(t,1000);
+})();
+
+function jvToggle(){
+  jvOpen=!jvOpen;
+  document.getElementById('jv-panel').classList.toggle('jvopen',jvOpen);
+  const sys=document.getElementById('jv-sys-mode');
+  const foot=document.getElementById('jv-foot-r');
+  const hi=window.currentLang==='hi';
+  if(jvOpen){
+    if(sys) sys.textContent=hi?'सक्रिय मोड':'ACTIVE MODE';
+    if(foot) foot.textContent=hi?'सक्रिय':'ACTIVE';
+    if(!document.getElementById('jv-msgs').querySelector('.jvline')) jvBoot();
+  } else {
+    if(sys) sys.textContent=hi?'स्टैंडबाय':'STANDBY MODE';
+    if(foot) foot.textContent=hi?'स्टैंडबाय':'STANDBY';
+  }
+}
+
+function jvBoot(){
+  const hi=window.currentLang==='hi';
+  jvTyping(true);
+  setTimeout(()=>{
+    jvTyping(false);
+    jvLine('sys', hi?'सिस्टम ऑनलाइन। JARVIS v2 तैयार।':'SYSTEM ONLINE. JARVIS v2 READY.');
+    addSysLog(hi?'JARVIS बूट सफल':'JARVIS BOOT OK');
+    setTimeout(()=>{
+      jvLine('ai', hi?'नमस्ते। मैं JARVIS हूं। Mann के प्रोजेक्ट्स, CAD, कौशल या अनुभव के बारे में पूछें।':"Good day. I'm JARVIS. Ask about Mann's projects, CAD designs, skills, or experience.");
+      jvUpdateShortcuts(hi);
+    },450);
+  },600);
+}
+
+function jvTyping(on){
+  const t=document.getElementById('jv-typing');if(t)t.style.display=on?'block':'none';
+}
+function jvLine(type,text){
+  const el=document.getElementById('jv-msgs');
+  const d=document.createElement('div');d.className='jvline '+type;d.innerHTML=text;
+  el.insertBefore(d,document.getElementById('jv-typing'));
+  el.scrollTop=el.scrollHeight;
+}
+function addSysLog(msg){
+  const log=document.getElementById('jv-syslog');if(!log)return;
+  const d=document.createElement('div');d.className='jv-log-line';
+  d.innerHTML=msg;log.appendChild(d);
+  if(log.children.length>8) log.removeChild(log.firstChild);
+  log.scrollTop=log.scrollHeight;
+}
+
+function jvUpdateShortcuts(hi){
+  const el=document.getElementById('jv-shortcuts');if(!el)return;
+  const pairs=hi?
+    [['सर्वश्रेष्ठ प्रोजेक्ट','सर्वश्रेष्ठ प्रोजेक्ट'],['CAD डिज़ाइन','CAD डिज़ाइन'],['कौशल','कौशल'],['संपर्क','संपर्क']]:
+    [['Best project','Best project'],['CAD designs','CAD designs'],['Skills','Skills'],['Contact','Contact']];
+  el.innerHTML=pairs.map(([lbl,q])=>`<button class="jv-sc" onclick="jvAsk('${q}')">${lbl}</button>`).join('');
+}
+
+const JVEN={
+  drone:"GESTURE DRONE >> 3x DJI Mavic2Pro via hand gestures. Custom 5-layer NumPy NN, zero PyTorch. 94.2% accuracy, sub-50ms latency.",
+  turtle:"TURTLEBOT4 >> Real indoor ROS2 Jazzy deployment. Dynamic occupancy queuing auto-reroutes when waypoints occupied. Full autonomous docking.",
+  rpi:"RPi TRACKING >> YOLOv8 NCNN at 30fps on RPi 4. Dual MG996R servos pan-tilt to keep target centred via P-controller.",
+  ard:"ARDUINO MAPPER >> Dual-Arduino robot. ~7 micrometer encoder precision. Maps room then executes return with 5 scheduled stops.",
+  niryo:"NIRYO SYSTEM >> TurtleBot4 transports, Niryo NED2 6-DOF arm sorts, ESP32+RFID identifies. Flask REST API orchestrates 3 robots in parallel.",
+  mjol:"MJOLNIR CAD >> Full parametric Fusion 360 replica of Thor's hammer. Viewable in the 3D CAD section above.",
+  arm:"ROBOTIC ARM CAD >> Multi-DOF arm from scratch. Full joint assemblies with servo clearance tolerances. Rotate in the CAD viewer.",
+  lidar:"LIDAR ROBOT CAD >> 4-wheel diff-drive chassis with integrated LiDAR mount. ROS2-ready. See in CAD section.",
+  cad:"3x CAD DESIGNS >> Mjolnir, Robotic Arm, 4-Wheel LiDAR Robot. All interactive in the 3D CAD section.",
+  skill:"TECH STACK >> Python, C++, ROS2 Jazzy, Nav2, SLAM, TensorFlow, MediaPipe, YOLOv8, OpenCV, Flask, Arduino, RPi4, ESP32, Niryo NED2, Fusion 360",
+  contact:"CONTACT >> mannjanodiauk@gmail.com | linkedin.com/in/mann-janodia | github.com/MannJanodia3404",
+  exp:"EXPERIENCE >> RF Engineer @ Optimized Solutions (2025) | Electrical Engineer @ Bosch Rexroth (2024) | Firmware Lead @ Robofest (2023)"
+};
+const JVHI={
+  drone:"जेस्चर ड्रोन >> 3 DJI ड्रोन हाथ के इशारों से। कस्टम NumPy NN, PyTorch नहीं। 94.2% सटीकता।",
+  turtle:"TurtleBot4 >> वास्तविक ROS2 Jazzy तैनाती। डायनामिक कतार स्वचालित रीरूट। पूर्ण ऑटो डॉकिंग।",
+  rpi:"RPi ट्रैकिंग >> RPi 4 पर YOLOv8 NCNN 30fps। MG996R सर्वो P-कंट्रोलर से लक्ष्य केंद्रित।",
+  ard:"Arduino मैपर >> दो-Arduino। ~7 माइक्रोमीटर सटीकता। कमरा मैप कर 5 स्टॉप के साथ वापस।",
+  niryo:"Niryo प्रणाली >> TurtleBot4 ट्यूब ले जाता है, Niryo NED2 छांटता है, ESP32+RFID पहचानता है। Flask API तीनों को समन्वित करता है।",
+  mjol:"म्जोल्निर CAD >> Thor के हथौड़े का पूर्ण Fusion 360 CAD। ऊपर 3D CAD सेक्शन में देखें।",
+  arm:"रोबोटिक आर्म CAD >> मल्टी-DOF, खरोंच से। सर्वो टॉलरेंस के साथ। CAD व्यूअर में देखें।",
+  lidar:"LiDAR रोबोट CAD >> 4-पहिया चेसिस, LiDAR माउंट। ROS2-तैयार। CAD सेक्शन में देखें।",
+  cad:"3 CAD डिज़ाइन >> Mjolnir, Robotic Arm, 4-Wheel LiDAR Robot। सब 3D CAD में इंटरैक्टिव।",
+  skill:"तकनीकी स्टैक >> Python, C++, ROS2 Jazzy, Nav2, SLAM, TensorFlow, MediaPipe, YOLOv8, OpenCV, Flask, Arduino, RPi4, ESP32, Fusion 360",
+  contact:"संपर्क >> mannjanodiauk@gmail.com | linkedin.com/in/mann-janodia | github.com/MannJanodia3404",
+  exp:"अनुभव >> RF Engineer @ Optimized Solutions (2025) | Electrical Engineer @ Bosch Rexroth (2024) | Firmware Lead @ Robofest (2023)"
+};
+const JVKB={
+  drone:/drone|gesture|webots|mediapipe|numpy/i,turtle:/turtlebot|ros2|nav2|slam/i,
+  rpi:/raspberry|rpi|yolo|servo|tracking|camera/i,ard:/arduino|mapping|encoder/i,
+  niryo:/niryo|rfid|flask|tube|sort|esp32/i,mjol:/mjolnir|thor|hammer/i,
+  arm:/robotic.?arm/i,lidar:/lidar|4.wheel|rover/i,cad:/cad|fusion|f360/i,
+  skill:/skill|tech|stack|language/i,contact:/contact|email|hire|linkedin/i,
+  exp:/experience|job|work|bosch|robofest/i
+};
+
+function jvRespond(text){
+  const t=text.toLowerCase(),hi=window.currentLang==='hi';
+  jvTyping(true);
+  setTimeout(()=>{
+    jvTyping(false);
+    const rs=hi?JVHI:JVEN;
+    for(const[k,re] of Object.entries(JVKB)){
+      if(re.test(t)){
+        jvLine('ai',rs[k]);
+        addSysLog(hi?'क्वेरी पूरी':'QUERY RESOLVED');
+        jvUpdateShortcuts(hi);
+        return;
+      }
+    }
+    if(/best|impressive|favourite|सर्वश्रेष्ठ/.test(t)){jvLine('ai',rs.niryo);addSysLog(hi?'सिफारिश दी':'RECOMMENDATION SENT');jvUpdateShortcuts(hi);return;}
+    if(/project|all|show|list|सभी|प्रोजेक्ट/.test(t)){
+      jvLine('ai',hi?'8 प्रोजेक्ट: जेस्चर ड्रोन, TurtleBot4, RPi ट्रैकिंग, Arduino मैपर, Niryo, Mjolnir, Robotic Arm, LiDAR Robot।':'PROJECTS (8): Gesture Drones | TurtleBot4 | RPi Tracking | Arduino Mapper | Niryo Sorting | Mjolnir | Robotic Arm | LiDAR Robot');
+      jvUpdateShortcuts(hi);return;
+    }
+    jvLine('sys',hi?'अज्ञात इनपुट। विकल्प चुनें:':'UNRECOGNIZED INPUT. TRY SHORTCUTS:');
+    jvUpdateShortcuts(hi);
+  },400);
+}
+
+function jvAsk(txt){jvLine('usr',txt);jvRespond(txt);}
+function jvSend(){const i=document.getElementById('jv-in'),v=i.value.trim();if(!v)return;i.value='';jvAsk(v);}
+document.addEventListener('DOMContentLoaded',()=>{
+  const inp=document.getElementById('jv-in');
+  if(inp)inp.addEventListener('keydown',e=>{if(e.key==='Enter')jvSend();});
+});
+</script>
 </body>
 </html>
