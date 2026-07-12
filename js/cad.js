@@ -39,14 +39,20 @@ import { STLLoader } from 'three/addons/loaders/STLLoader.js';
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   canvasEl.appendChild(renderer.domElement);
 
-  // Lighting: soft studio setup so matte STL surfaces read well.
-  scene.add(new THREE.HemisphereLight(0xffffff, 0xb8b6ad, 0.85));
-  const key = new THREE.DirectionalLight(0xffffff, 1.15);
-  key.position.set(1, 1.4, 1.2);
-  scene.add(key);
-  const fill = new THREE.DirectionalLight(0xffffff, 0.4);
-  fill.position.set(-1.2, 0.5, -1);
-  scene.add(fill);
+  // Lighting: bright studio setup so matte STL surfaces always read.
+  scene.add(new THREE.HemisphereLight(0xffffff, 0xbfbdb4, 1.15));
+  scene.add(new THREE.AmbientLight(0xffffff, 0.45));
+  // Key + fill lights are parented to the camera so the model is lit from
+  // the viewer's side no matter how it's rotated (prevents an all-black view).
+  const camLightRig = new THREE.Group();
+  const key = new THREE.DirectionalLight(0xffffff, 1.1);
+  key.position.set(0.6, 0.8, 1);
+  camLightRig.add(key);
+  const fill = new THREE.DirectionalLight(0xffffff, 0.55);
+  fill.position.set(-0.8, 0.3, 0.5);
+  camLightRig.add(fill);
+  camera.add(camLightRig);
+  scene.add(camera);
 
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
@@ -54,12 +60,15 @@ import { STLLoader } from 'three/addons/loaders/STLLoader.js';
   controls.rotateSpeed = 0.9;
   controls.zoomSpeed = 0.9;
   controls.enablePan = false;
-  controls.minDistance = 1;
-  controls.maxDistance = 4000;
+  controls.minDistance = 0.01;
+  controls.maxDistance = 100000;
 
-  const material = new THREE.MeshStandardMaterial({
-    color: INK, metalness: 0.15, roughness: 0.55, flatShading: false
-  });
+  // A fresh material per mesh avoids any shared-state colour glitches.
+  function newMaterial() {
+    return new THREE.MeshStandardMaterial({
+      color: 0x3a3d37, metalness: 0.1, roughness: 0.6
+    });
+  }
 
   let mesh = null;
   let homeState = null;      // saved camera + target for double-click reset
@@ -69,40 +78,37 @@ import { STLLoader } from 'three/addons/loaders/STLLoader.js';
   function clearMesh() {
     if (mesh) {
       scene.remove(mesh);
-      mesh.geometry.dispose();
+      if (mesh.geometry) mesh.geometry.dispose();
+      if (mesh.material) mesh.material.dispose();
       mesh = null;
     }
   }
 
   function frameObject(geometry) {
     geometry.computeVertexNormals();
-    geometry.computeBoundingBox();
-    const bb = geometry.boundingBox;
-    const center = new THREE.Vector3();
-    bb.getCenter(center);
-    geometry.translate(-center.x, -center.y, -center.z);
+    geometry.center();               // move geometry to its own centre
+    geometry.computeBoundingSphere();
+    const radius = (geometry.boundingSphere && geometry.boundingSphere.radius) || 1;
 
-    mesh = new THREE.Mesh(geometry, material);
-    // STLs from Fusion export Z-up; tip toward viewer-friendly orientation.
+    mesh = new THREE.Mesh(geometry, newMaterial());
+    // Fusion STLs export Z-up; rotate so the model stands naturally.
     mesh.rotation.x = -Math.PI / 2;
     scene.add(mesh);
 
-    const size = new THREE.Vector3();
-    bb.getSize(size);
-    const radius = Math.max(size.x, size.y, size.z) * 0.5 || 1;
-    const dist = radius / Math.sin((camera.fov * Math.PI / 180) / 2) * 1.4;
+    // Distance that fits the whole bounding sphere in view, with margin.
+    const fov = camera.fov * Math.PI / 180;
+    const dist = (radius / Math.sin(fov / 2)) * 1.25;
 
-    camera.position.set(dist * 0.7, dist * 0.55, dist * 0.9);
-    camera.near = dist / 100;
-    camera.far = dist * 100;
+    camera.position.set(dist * 0.65, dist * 0.5, dist * 0.9);
+    camera.near = Math.max(dist / 1000, 0.001);
+    camera.far = dist * 1000;
     camera.updateProjectionMatrix();
     controls.target.set(0, 0, 0);
+    controls.minDistance = radius * 0.6;
+    controls.maxDistance = dist * 8;
     controls.update();
 
-    homeState = {
-      pos: camera.position.clone(),
-      target: controls.target.clone()
-    };
+    homeState = { pos: camera.position.clone(), target: controls.target.clone() };
   }
 
   function resetView() {
@@ -113,6 +119,14 @@ import { STLLoader } from 'three/addons/loaders/STLLoader.js';
   }
   renderer.domElement.addEventListener('dblclick', resetView);
 
+  function showFallbackImage(c) {
+    loadingEl.style.display = 'block';
+    loadingEl.innerHTML =
+      '<img src="' + esc(c.src) + '" alt="' + esc(c.label) +
+      '" style="max-width:100%;max-height:420px;object-fit:contain" ' +
+      'onerror="this.style.display=\'none\'">';
+  }
+
   function load(i) {
     const c = CAD_MODELS[i];
     nameEl.textContent = c.name.toUpperCase();
@@ -121,26 +135,27 @@ import { STLLoader } from 'three/addons/loaders/STLLoader.js';
       el.classList.toggle('active', +el.dataset.i === i));
 
     const token = ++currentToken;
-    loadingEl.textContent = 'LOADING MODEL…';
+    loadingEl.innerHTML = 'LOADING MODEL…';
     loadingEl.style.display = 'block';
     clearMesh();
 
-    loader.load(
-      c.stl,
-      (geometry) => {
-        if (token !== currentToken) { geometry.dispose(); return; }
+    // Fetch + parse manually so network/parse failures are handled cleanly
+    // and switching between models is always reliable.
+    fetch(c.stl)
+      .then((r) => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer(); })
+      .then((buf) => {
+        if (token !== currentToken) return;        // a newer request superseded this one
+        const geometry = loader.parse(buf);
         frameObject(geometry);
         loadingEl.style.display = 'none';
-      },
-      undefined,
-      () => {
+        loadingEl.innerHTML = '';
+        resize();
+      })
+      .catch((err) => {
         if (token !== currentToken) return;
-        // Fallback: if the STL can't load, show the render image instead.
-        loadingEl.innerHTML =
-          '<img src="' + esc(c.src) + '" alt="' + esc(c.label) +
-          '" style="max-width:100%;max-height:400px;object-fit:contain">';
-      }
-    );
+        console.warn('[cad] STL load failed for ' + c.name + ':', err);
+        showFallbackImage(c);
+      });
   }
 
   /* ---------- Sizing ---------- */
@@ -153,6 +168,11 @@ import { STLLoader } from 'three/addons/loaders/STLLoader.js';
     camera.updateProjectionMatrix();
   }
   window.addEventListener('resize', resize);
+  // ResizeObserver catches the case where the flex layout gives the canvas its
+  // real size only after first paint (which otherwise causes an oversized canvas).
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(resize).observe(canvasEl);
+  }
 
   /* ---------- Render loop ---------- */
   function animate() {
@@ -174,7 +194,5 @@ import { STLLoader } from 'three/addons/loaders/STLLoader.js';
   resize();
   animate();
   load(0);
-
-  // Re-measure once fonts/layout settle (the shell has a fixed height in CSS).
-  setTimeout(resize, 300);
+  setTimeout(resize, 300);   // re-measure once fonts/layout settle
 })();
