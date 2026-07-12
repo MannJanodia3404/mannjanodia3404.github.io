@@ -219,7 +219,7 @@ h2 {
 
 /* ---------- CAD ---------- */
 .cad-shell {
-  display: grid; grid-template-columns: 220px 1fr; margin-top: 28px; border: 1px solid var(--ink);
+  display: grid; grid-template-columns: 220px minmax(0, 1fr); margin-top: 28px; border: 1px solid var(--ink);
 }
 .cad-list { border-right: 1px solid var(--line); display: flex; flex-direction: column; }
 .cad-item {
@@ -235,16 +235,22 @@ h2 {
   margin-top: auto; padding: 16px 20px;
   font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--grey-2); line-height: 1.8;
 }
-.cad-viewer { position: relative; }
+.cad-viewer { position: relative; min-width: 0; overflow: hidden; }
 .cad-canvas {
   position: relative;
   width: 100%; height: 460px;
+  max-width: 100%;
   background: var(--panel);
   overflow: hidden;
   cursor: grab;
 }
 .cad-canvas:active { cursor: grabbing; }
-.cad-canvas canvas { display: block; }
+.cad-canvas canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100%;
+}
 .cad-loading {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .1em;
