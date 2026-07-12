@@ -1,8 +1,3 @@
-/* ============================================================
-   Mann Janodia — Portfolio
-   Palette: paper #f5f4f0 · ink #191b19 · green #159c50
-   Type: Archivo (display/body) · IBM Plex Mono (utility/data)
-   ============================================================ */
 
 :root {
   --paper: #f5f4f0;
@@ -241,8 +236,25 @@ h2 {
   font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--grey-2); line-height: 1.8;
 }
 .cad-viewer { position: relative; }
-.cad-viewer img {
-  display: block; width: 100%; height: 460px; object-fit: contain; background: var(--panel);
+.cad-canvas {
+  position: relative;
+  width: 100%; height: 460px;
+  background: var(--panel);
+  overflow: hidden;
+  cursor: grab;
+}
+.cad-canvas:active { cursor: grabbing; }
+.cad-canvas canvas { display: block; }
+.cad-loading {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .1em;
+  color: var(--grey-2); pointer-events: none; text-align: center;
+}
+.cad-hint {
+  position: absolute; top: 12px; left: 14px;
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .08em;
+  color: var(--grey-2); pointer-events: none;
+  background: rgba(245,244,240,.7); padding: 3px 7px;
 }
 .cad-bar {
   position: absolute; bottom: 0; left: 0; right: 0;
