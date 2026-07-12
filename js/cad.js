@@ -66,7 +66,7 @@ import { STLLoader } from 'three/addons/loaders/STLLoader.js';
   // A fresh material per mesh avoids any shared-state colour glitches.
   function newMaterial() {
     return new THREE.MeshStandardMaterial({
-      color: 0x3a3d37, metalness: 0.1, roughness: 0.6
+      color: 0xd8d6cd, metalness: 0.05, roughness: 0.75
     });
   }
 
