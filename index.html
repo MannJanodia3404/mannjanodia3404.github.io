@@ -80,12 +80,15 @@
       <div class="label">// 3D MODELS</div>
       <h2>CAD workshop</h2>
     </div>
-    <span class="section-note">SELECT A MODEL TO VIEW</span>
+    <span class="section-note">DRAG TO ROTATE · SCROLL TO ZOOM</span>
   </div>
   <div class="cad-shell">
     <div id="cad-list" class="cad-list"></div>
     <div class="cad-viewer">
-      <img id="cad-img" src="" alt="">
+      <div id="cad-canvas" class="cad-canvas">
+        <div id="cad-loading" class="cad-loading">LOADING MODEL…</div>
+        <div id="cad-hint" class="cad-hint">DRAG · SCROLL · DOUBLE-CLICK TO RESET</div>
+      </div>
       <div class="cad-bar">
         <span id="cad-name" class="cad-bar-name"></span>
         <span id="cad-meta" class="cad-bar-meta"></span>
@@ -117,17 +120,24 @@
     <div class="contact-links">
       <a href="https://github.com/MannJanodia3404" target="_blank" rel="noopener">GITHUB</a>
       <a href="https://www.linkedin.com/in/mann-janodia/" target="_blank" rel="noopener">LINKEDIN</a>
-      <a href="resume.pdf" target="_blank" rel="noopener" class="contact-resume">RESUME</a>
+      <a href="resume.pdf" class="contact-resume">RESUME</a>
     </div>
   </div>
   <div class="contact-foot">
     <span>© 2026 MANN JANODIA</span>
-    <span>LON 51.5896 N, 0.2286 W</span>
-    <span>BUILT BY HAND, NOT BY TEMPLATE</span>
   </div>
 </section>
 
 <script src="js/data.js"></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="js/cad.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
