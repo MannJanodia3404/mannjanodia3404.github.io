@@ -4,7 +4,7 @@ const PH = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='
 
 const PROJECTS = [
   {
-    id: 'p1', num: '001', title: 'Gesture Multi-Drone Control',
+    id: 'p1', num: '001', title: 'Neural Network Based Hand Gesture Control',
     stack: 'MediaPipe · NumPy NN · Webots', metric: '94.2% ACC',
     overview: 'A fully gesture-driven system controlling three simulated DJI Mavic2Pro drones in Webots using only a laptop webcam. Two separate neural networks, both written from scratch in NumPy, classify left-hand pose (drone selection) and right-hand pose (action), with results read by each drone controller every 8ms.',
     bullets: [
@@ -19,10 +19,10 @@ const PROJECTS = [
       { src: 'https://raw.githubusercontent.com/MannJanodia3404/Neural-Network-Based-Hand-Gesture-Control-for-Multi-Drone-Systems/main/worlds/.multi_drone.jpg', cap: 'WEBOTS SIMULATION' },
       { src: 'https://raw.githubusercontent.com/MannJanodia3404/Neural-Network-Based-Hand-Gesture-Control-for-Multi-Drone-Systems/main/gesture_nn/plots/RIGHT_adam.png', cap: 'TRAINING CURVES' }
     ],
-    github: 'https://github.com/MannJanodia3404'
+    github: 'https://github.com/MannJanodia3404/Neural-Network-Based-Hand-Gesture-Control-for-Multi-Drone-Systems'
   },
   {
-    id: 'p2', num: '002', title: 'Camera Servo Tracking',
+    id: 'p2', num: '002', title: 'Object Detection and Tracking',
     stack: 'YOLOv8 NCNN · RPi 4 · pigpio', metric: '30 FPS',
     overview: 'Real-time multi-object detection and tracking on a Raspberry Pi 4 using an NCNN-exported YOLOv8 model, driving two MG996R servos for pan-tilt camera control.',
     bullets: [
@@ -36,7 +36,7 @@ const PROJECTS = [
     github: 'https://github.com/MannJanodia3404/Object_Detection_and_Tracking'
   },
   {
-    id: 'p3', num: '003', title: 'TurtleBot4 Occupancy Navigation',
+    id: 'p3', num: '003', title: 'TurtleBot Dynamic Queue Navigation',
     stack: 'ROS2 Jazzy · Nav2 · SLAM', metric: '6 WAYPOINTS',
     overview: 'Dynamic waypoint scheduling with live occupancy detection on a TurtleBot 4, deployed in a real indoor environment: the H101 lab at Coventry University.',
     bullets: [
@@ -67,7 +67,7 @@ const PROJECTS = [
     github: 'https://github.com/MannJanodia3404/Autonomous_Mapping_Robot_Arduino'
   },
   {
-    id: 'p5', num: '005', title: 'Niryo NED2 Tube Sorting',
+    id: 'p5', num: '005', title: 'Autonomous Test Tube Transport and Placement System',
     stack: 'PyNiryo · Flask · ESP32 RFID', metric: '0 HUMANS',
     overview: 'A fully autonomous three-component lab system combining mobile navigation, 6-DOF manipulation and RFID identification to pick, scan and sort test tubes with zero human intervention.',
     bullets: [
@@ -78,7 +78,7 @@ const PROJECTS = [
     ],
     stats: [{ v: '4', l: 'TUBES/CYCLE' }, { v: '6', l: 'API ENDPOINTS' }, { v: '3', l: 'SYSTEMS' }],
     media: [{ src: PH, cap: 'NED2 SORTING CELL' }],
-    github: 'https://github.com/MannJanodia3404'
+    github: 'https://github.com/MannJanodia3404/Autonomous-Test-Tube-Transport-and-Placement-System'
   },
   {
     id: 'p6', num: '006', title: 'Mjolnir CAD Design',
@@ -122,9 +122,27 @@ const PROJECTS = [
 ];
 
 const CAD_MODELS = [
-  { fig: 'FIG. 04', name: 'Mjolnir', sub: 'PARAMETRIC REPLICA', label: 'Mjolnir CAD render', src: 'https://raw.githubusercontent.com/MannJanodia3404/Mj-lnir_Cad/main/Mjolnir%20Render.png', meta: '4 BODIES · STL' },
-  { fig: 'FIG. 05', name: 'Robotic Arm', sub: 'MULTI-DOF ASSEMBLY', label: 'Robotic arm CAD render', src: 'https://raw.githubusercontent.com/MannJanodia3404/Robotic-Arm/main/Robotics_Arm_Render.png', meta: '6 JOINTS · STEP' },
-  { fig: 'FIG. 06', name: 'LiDAR Robot', sub: 'DIFF DRIVE CHASSIS', label: 'LiDAR robot CAD render', src: 'https://raw.githubusercontent.com/MannJanodia3404/4-Wheel-LiDAR-Robot/main/images.png', meta: 'ROS2 READY · STL' }
+  {
+    fig: 'FIG. 04', name: 'Mjolnir', sub: 'PARAMETRIC REPLICA',
+    label: 'Mjolnir CAD render',
+    src: 'https://raw.githubusercontent.com/MannJanodia3404/Mj-lnir_Cad/main/Mjolnir%20Render.png',
+    stl: 'https://raw.githubusercontent.com/MannJanodia3404/Mj-lnir_Cad/main/mjolnir.stl',
+    meta: '4 BODIES · STL'
+  },
+  {
+    fig: 'FIG. 05', name: 'Robotic Arm', sub: 'MULTI-DOF ASSEMBLY',
+    label: 'Robotic arm CAD render',
+    src: 'https://raw.githubusercontent.com/MannJanodia3404/Robotic-Arm/main/Robotics_Arm_Render.png',
+    stl: 'https://raw.githubusercontent.com/MannJanodia3404/Robotic-Arm/main/Robotics_arm_assembly.stl',
+    meta: '6 JOINTS · STEP'
+  },
+  {
+    fig: 'FIG. 06', name: 'LiDAR Robot', sub: 'DIFF DRIVE CHASSIS',
+    label: 'LiDAR robot CAD render',
+    src: 'https://raw.githubusercontent.com/MannJanodia3404/4-Wheel-LiDAR-Robot/main/images.png',
+    stl: 'https://raw.githubusercontent.com/MannJanodia3404/4-Wheel-LiDAR-Robot/main/4-wheel%20robot.stl',
+    meta: 'ROS2 READY · STL'
+  }
 ];
 
 const SKILL_GROUPS = [
