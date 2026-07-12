@@ -1,6 +1,4 @@
-/* ============================================================
-   Rendering + interactions
-   ============================================================ */
+
 (function () {
   'use strict';
 
@@ -68,42 +66,6 @@
     if (first) toggle(first);
   }
 
-  /* ---------- CAD viewer ---------- */
-  function renderCad() {
-    const listEl = document.getElementById('cad-list');
-    const imgEl = document.getElementById('cad-img');
-    const nameEl = document.getElementById('cad-name');
-    const metaEl = document.getElementById('cad-meta');
-    if (!listEl) return;
-
-    const items = CAD_MODELS.map((c, i) => `
-      <div class="cad-item${i === 0 ? ' active' : ''}" data-i="${i}" role="button" tabindex="0">
-        <div class="cad-fig">${esc(c.fig)}</div>
-        <div class="cad-name">${esc(c.name)}</div>
-        <div class="cad-sub">${esc(c.sub)}</div>
-      </div>`).join('');
-    listEl.innerHTML = items + '<div class="cad-foot">ALL MODELS<br>FUSION 360 · FDM READY</div>';
-
-    const select = (i) => {
-      const c = CAD_MODELS[i];
-      imgEl.src = c.src; imgEl.alt = c.label;
-      nameEl.textContent = c.name.toUpperCase();
-      metaEl.textContent = c.meta;
-      listEl.querySelectorAll('.cad-item').forEach((el) =>
-        el.classList.toggle('active', +el.dataset.i === i));
-    };
-
-    listEl.querySelectorAll('.cad-item').forEach((el) => {
-      const i = +el.dataset.i;
-      el.addEventListener('click', () => select(i));
-      el.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(i); }
-      });
-    });
-
-    select(0);
-  }
-
   /* ---------- Skills ---------- */
   function renderSkills() {
     const grid = document.getElementById('skills-grid');
@@ -134,9 +96,10 @@
       </div>`).join('');
   }
 
-  /* ---------- Scroll reveal ---------- */
+  /* ---------- Scroll reveal (fail-safe) ---------- */
   function initReveal() {
-    const targets = document.querySelectorAll('.about, .section, .contact');
+    const targets = Array.from(document.querySelectorAll('.about, .section, .contact'));
+    // If anything goes wrong, sections must still be visible.
     if (!('IntersectionObserver' in window)) {
       targets.forEach((t) => t.classList.add('in'));
       return;
@@ -146,15 +109,28 @@
       entries.forEach((en) => {
         if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
       });
-    }, { threshold: 0.08 });
+    }, { threshold: 0.05, rootMargin: '0px 0px -5% 0px' });
     targets.forEach((t) => io.observe(t));
+
+    // Safety net: force-reveal anything still hidden shortly after load,
+    // so a missed observer callback can never leave a section invisible.
+    setTimeout(() => targets.forEach((t) => t.classList.add('in')), 1200);
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    renderProjects();
-    renderCad();
-    renderSkills();
-    renderExperience();
-    initReveal();
-  });
+  function safe(label, fn) {
+    try { fn(); } catch (e) { console.error('[portfolio] ' + label + ' failed:', e); }
+  }
+
+  function boot() {
+    safe('projects', renderProjects);
+    safe('skills', renderSkills);
+    safe('experience', renderExperience);
+    safe('reveal', initReveal);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
 })();
